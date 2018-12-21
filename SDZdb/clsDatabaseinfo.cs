@@ -20,4 +20,35 @@ namespace SDZdb
         public string mibao { get; set; }
         
     }
+    public class clCard_info
+    {
+        public string Order_id { get; set; }//=FItemID
+        public string daima_gonghao { get; set; }
+        public string mingcheng { get; set; }
+        public string quanming { get; set; }
+        public string xingbie { get; set; }
+        public string minzu { get; set; }
+        public string chushengriqi { get; set; }
+        public string zhengjianleixing { get; set; }
+        public string zhengjianhaoma { get; set; }
+        public string jiatingzhuzhi { get; set; }
+        public string zhengjianyouxiao { get; set; }
+        public string jiguan { get; set; }
+        public string shenheren { get; set; }
+        public string fujian { get; set; }
+        public string tupian { get; set; }     
+        //PIC
+        public string FTypeID { get; set; }
+        public string FItemID { get; set; }
+        //public string FFileName { get; set; }//=tupian
+        public string FData { get; set; }
+        public string FVersion { get; set; }
+        public string FSaveMode { get; set; }
+        public string FPage { get; set; }
+        public string FEntryID { get; set; }
+
+
+        public byte[] imagebytes { get; set; }     
+      
+    }
 }

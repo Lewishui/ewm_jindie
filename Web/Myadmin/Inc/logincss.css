@@ -40,7 +40,7 @@ body{
 
 .mains{
 	width:100%;
-	height:611px;
+	height:711px;
 	background:url("../images/back_bg.jpg") repeat left top;}
 
 
@@ -81,9 +81,7 @@ body{
 .login .center .inner input{
 	border:1px solid #075D6C;
 	line-height:35px;
-	height:35px;
 	padding:0 5px;
-	width:180px;
 	font-size:18px;
 	font-family:"Microsoft Yahei",Arial, Helvetica, sans-serif;
 	color:#075D6C;
@@ -101,6 +99,19 @@ body{
 	cursor:pointer;
 	background:url("../images/login_icon1.gif") no-repeat left top;
 	color:#FFFFFF;
+	font-family:"Microsoft Yahei",Arial, Helvetica, sans-serif;
+	}
+ .NOLoginSub{
+	border-style: none;
+    border-color: inherit;
+    border-width: medium;
+    font-size:18px;
+	font-weight:normal;
+	line-height:30px;
+	width:89px;
+	cursor:pointer;
+	/*background:url("../images/login_icon1.gif") no-repeat left top;*/
+	color:#b6ff00;
 	font-family:"Microsoft Yahei",Arial, Helvetica, sans-serif;
 	}
 .login .center .inner .LoginSub:hover{
@@ -132,4 +143,3 @@ body{
 .clear { 
 	height:1%; 
 	overflow:hidden; }	
-				

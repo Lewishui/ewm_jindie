@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="inc/logincss.css" rel="stylesheet" type="text/css" />
+    <link href="../../Myadmin/css/common.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript">
         function CheckLogin() {
             if (document.MyForm.username.value == "") {
@@ -21,10 +22,35 @@
             }
 
         }
+        $(document).ready(function () {
+
+            $('select').addClass("form-control");
+
+        });
     </script>
     <style type="text/css">
         .auto-style1 {
             width: 227px;
+        }
+
+        .select {
+            position: absolute;
+            width: 297px;
+            height: 58px;
+            padding: 0 24px 0 8px;
+            color: #fff;
+            font: 12px/21px arial,sans-serif;
+            background: url(select.png) no-repeat; /*span背景图片，其实就是dropdownlist图片*/
+            overflow: hidden;
+            top: 0px;
+            left: 0px;
+        }
+
+
+
+        .auto-style2 {
+            width: 404px;
+            height: 53px;
         }
     </style>
 </head>
@@ -32,22 +58,43 @@
 <body>
     <div class="mains">
         <div class="inners">
-            <div class="lefts"></div>
+            <div class="lefts">
+
+                <p align="left" class="pname">
+                    <b><span style="font-size: 43pt">证件录入系统</span></b>
+                </p>
+            </div>
 
             <div class="login">
                 <form name="MyForm" id="MyForm" runat="server">
                     <%--<form action="admin_login.asp" method="post" name="MyForm" id="Form1" runat="server" >--%>
+                    <div class="dbweizhi">
+                        <table id="Table1">
+                        </table>
+                    </div>
                     <input type="hidden" value="chklogin" name="reaction">
+
                     <div class="center">
                         <div class="inner">
-                            &nbsp;<p>&nbsp;</p>
+                            <%--     &nbsp;<p>&nbsp;</p>--%>
+                            <%--         <p>&nbsp;</p>
                             <p>&nbsp;</p>
                             <p>&nbsp;</p>
                             <p>&nbsp;</p>
                             <p>&nbsp;</p>
-                            <p>&nbsp;</p>
-                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>--%>
                             <table cellpadding="0" cellspacing="0" id="innnertalbe">
+                                <tr>
+                                    <td height="60">
+                                        <p align="right" style="width: 81px">
+                                            <b><span style="font-size: 13pt">数据库：</span></b>
+                                        </p>
+                                    </td>
+                                    <td class="auto-style1">
+                                        <asp:DropDownList ID="DropDownList1" runat="server" style="color: wheat ;background-color: black" class="select_w150"  ></asp:DropDownList>
+
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td height="60">
                                         <p align="right" style="width: 81px">
@@ -55,7 +102,7 @@
                                         </p>
                                     </td>
                                     <td class="auto-style1">
-                                        <input name="username" type="text" class="login_textfield" id="username" size="16" maxlength="100" value="<%=user%>" /></td>
+                                        <input name="username" type="text" class="select_w150" id="username" size="16" maxlength="100" value="<%=user%>" /></td>
                                 </tr>
                                 <tr>
                                     <td height="60">
@@ -64,7 +111,7 @@
                                         </p>
                                     </td>
                                     <td class="auto-style1">
-                                        <input name="password" type="password" class="login_textfield" id="password" size="16" maxlength="100" value="<%=pass%>" /></td>
+                                        <input name="password" type="password" class="select_w150" id="password" size="16" maxlength="100" value="<%=pass%>" /></td>
                                 </tr>
 
                                 <tr>
@@ -74,27 +121,32 @@
                                         <%--<asp:Button  name="image" runat="server" type="submit" class="LoginSub" OnClientClick="CheckLogin()" onclick="CheckLogin()" value=" 登 录 " />--%>
                                         <asp:Button ID="image" runat="server" Text=" 登 录 " class="LoginSub" OnClick="HtmlBtn_Click" OnClientClick="CheckLogin()" />
 
-                                        <asp:Button ID="btcreate" runat="server" Text=" 注册 " class="LoginSub" OnClick="HtmlBtcreate_Click" Visible="False" />
+                                        <asp:Button ID="btcreate" runat="server" Text=" 创建账户 " class="LoginSub" OnClick="HtmlBtcreate_Click" Visible="False" />
                                         <br>
-                                        <span style="color: #FF0000;"></span>
+                                        <br>
 
-                                        <br>
                                         <span style="color: #4cff00;"></span>
 
                                     </td>
 
                                 </tr>
+
                                 <tr>
+                                    <br>
                                     <td height="49"></td>
                                     <td class="auto-style1">
                                         <asp:Button ID="Btchangepas" runat="server" Text=" 改密 " class="LoginSub" OnClick="Btchangepas_Click" Visible="True" />
+                                        <asp:Button ID="frmmain" runat="server" Text=" 主页面 " class="LoginSub" OnClick="Btmain_Click" Visible="False" />
                                         <br>
                                         <span style="color: #FF0000;"></span>
 
                                     </td>
+
+
                                 </tr>
                                 <tr>
                                     <td align="center" colspan="5">
+                                        <asp:Button ID="Button1" runat="server" Text=" 游客登录 " class="NOLoginSub" OnClick="HtmlNOlogin_Click" Visible="True" Width="285px" />
                                         <br />
                                         <asp:Label ID="Label1" runat="server">
                                        <%=alterinfo1%>
@@ -104,12 +156,19 @@
                             </table>
                         </div>
                         <div class="clearfix"></div>
+
                     </div>
+
                 </form>
             </div>
 
-
         </div>
+    <%--    <div class="ui-login-footer">
+            <p >
+                <span class="font_gray">云合未来计算机技术有限公司  © Copyright 2018-2020  技术支持：信息技术中心   联系电话：16619776280</span>
+
+            </p>
+        </div>--%>
     </div>
 
 </body>
