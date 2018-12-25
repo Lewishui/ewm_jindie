@@ -20,11 +20,7 @@ D:\Dev Project\mysteap\work_office\AM_DeepercommercialDBMS\China_System.Common\o
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\China_System.Common.dll
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\China_System.Common.pdb
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\SDZdb.dll
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\office.dll
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\Microsoft.Vbe.Interop.dll
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\SDZdb.pdb
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\Microsoft.Office.Interop.Excel.xml
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\bin\Debug\office.xml
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\obj\Debug\China_System.Common.csprojResolveAssemblyReference.cache
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\obj\Debug\China_System.Common.dll
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\China_System.Common\obj\Debug\China_System.Common.pdb

@@ -336,25 +336,27 @@ namespace Web
             //if (results != null && results.Count > 0)
             //    readCards = readCards.Concat(results).ToList();
 
-
-            readCards[0].daima_gonghao = newaddno;
-            readCards[0].Order_id = FItemID.ToString();
-            if (ischeck_zhengjianhaoma == true)
+            if (readCards != null)
             {
-                bool isdouble = CHECK_zhengjianhaoma(BusinessHelp);
-                if (isdouble == false)
+                readCards[0].daima_gonghao = newaddno;
+                readCards[0].Order_id = FItemID.ToString();
+                if (ischeck_zhengjianhaoma == true)
                 {
-                    btwrite_Click(null, EventArgs.Empty);
+                    bool isdouble = CHECK_zhengjianhaoma(BusinessHelp);
+                    if (isdouble == false)
+                    {
+                        btwrite_Click(null, EventArgs.Empty);
 
-                    bind();
+                        bind();
+                    }
+                    else
+                        return;
                 }
                 else
-                    return;
-            }
-            else
-            {
-                btwrite_Click(null, EventArgs.Empty);
-                bind();
+                {
+                    btwrite_Click(null, EventArgs.Empty);
+                    bind();
+                }
             }
         }
         private void InitialSystemInfo()

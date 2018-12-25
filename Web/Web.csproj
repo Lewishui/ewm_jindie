@@ -68,8 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="ErrorPage\ErrorPage.aspx" />
+    <Content Include="FileNotFound.html" />
     <Content Include="frmReadIDCare.aspx" />
     <Content Include="frmUserManger.aspx" />
+    <Content Include="GenericErrorPage.html" />
+    <Content Include="Global.asax" />
     <Content Include="Myadmin\changepassword.aspx" />
     <Content Include="Myadmin\login.aspx" />
     <Content Include="Myadmin\css\common.css" />
@@ -337,6 +341,9 @@
     <Content Include="Myadmin\PicUpload\getProcess.asp" />
     <Content Include="Myadmin\PicUpload\init.js" />
     <Content Include="Myadmin\PicUpload\UpLoad_Class.asp" />
+    <Content Include="NoAccess.html" />
+    <Content Include="sample\index.html" />
+    <Content Include="sample\jquery.js" />
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
@@ -363,6 +370,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ErrorPage\ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage\ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmReadIDCare.aspx.cs">
       <DependentUpon>frmReadIDCare.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -376,6 +390,9 @@
     </Compile>
     <Compile Include="frmUserManger.aspx.designer.cs">
       <DependentUpon>frmUserManger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Myadmin\changepassword.aspx.cs">
       <DependentUpon>changepassword.aspx</DependentUpon>
@@ -447,6 +464,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\Cardweb.pubxml" />
     <None Include="副本 Web.Debug.config">
       <DependentUpon>副本 Web.config</DependentUpon>
     </None>

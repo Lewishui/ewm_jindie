@@ -1,4 +1,5 @@
-﻿using SDZdb;
+﻿using China_System.Common;
+using SDZdb;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -479,24 +480,26 @@ namespace clsBuiness
         #region 读取IC卡设备
         public List<clCard_info> Read_card()
         {
-            string image64 = ImgToBase64String(@"D:\Devlop\身份证阅读器二次开发软件说明\cardv.jpg");
-            //string m_strPath = Application.StartupPath;
+            #region 假数据
+            //string image64 = ImgToBase64String(@"D:\Devlop\身份证阅读器二次开发软件说明\cardv.jpg");
+            ////string m_strPath = Application.StartupPath;
 
-            //Base64ToImage(image64).Save(m_strPath + "\\Hello.jpg");
-            Base64ToImage(image64).Save(mdbpath2_Ctirx);
-
-
-            List<clCard_info> reads1 = new List<clCard_info>();
+            ////Base64ToImage(image64).Save(m_strPath + "\\Hello.jpg");
+            //Base64ToImage(image64).Save(mdbpath2_Ctirx);
 
 
-            clCard_info item = new clCard_info();
-            item.daima_gonghao = "d1ll";
-            item.zhengjianhaoma = "12345";
-            item.tupian = item.zhengjianhaoma;
-            item.FData = image64;
+            //List<clCard_info> reads1 = new List<clCard_info>();
 
-            reads1.Add(item);
-            return reads1;
+
+            //clCard_info item = new clCard_info();
+            //item.daima_gonghao = "d1ll";
+            //item.zhengjianhaoma = "12345";
+            //item.tupian = item.zhengjianhaoma;
+            //item.FData = image64;
+
+            //reads1.Add(item);
+            //return reads1; 
+            #endregion
             try
             {
 
@@ -870,7 +873,11 @@ namespace clsBuiness
                 if (reader["F_108"].ToString() != "")
                     item.minzu = reader["F_108"].ToString();
                 if (reader["F_109"].ToString() != "")
+                {
                     item.chushengriqi = reader["F_109"].ToString();
+                    item.chushengriqi = clsCommHelp.objToDateTime1(reader["F_109"].ToString());
+
+                }
                 if (reader["F_103"].ToString() != "")
                     item.zhengjianleixing = reader["F_103"].ToString();
 
@@ -882,9 +889,11 @@ namespace clsBuiness
 
 
                 if (reader["F_127"].ToString() != "")
+                {
                     item.zhengjianyouxiao = reader["F_127"].ToString();
+                    item.zhengjianyouxiao = clsCommHelp.objToDateTime1(reader["F_127"].ToString());
 
-
+                }
                 if (reader["F_105"].ToString() != "")
                     item.jiguan = reader["F_105"].ToString();
 

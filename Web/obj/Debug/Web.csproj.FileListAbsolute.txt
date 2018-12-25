@@ -27,9 +27,5 @@ D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\clsBuiness.pdb
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\SDZdb.pdb
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\China_System.Common.dll
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\Microsoft.Office.Interop.Excel.dll
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\office.dll
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\Microsoft.Vbe.Interop.dll
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\China_System.Common.pdb
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\Microsoft.Office.Interop.Excel.xml
-D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\office.xml
 D:\Devlop\身份证阅读器二次开发软件说明\ewm\Web\bin\cfgList.config
