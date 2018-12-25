@@ -22,11 +22,15 @@
             }
 
         }
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
-            $('select').addClass("form-control");
+        //    $('select').addClass("form-control");
 
-        });
+        //});
+        //$(document).ready(function () {
+
+        //});
+
     </script>
     <style type="text/css">
         .auto-style1 {
@@ -45,9 +49,6 @@
             top: 0px;
             left: 0px;
         }
-
-
-
         .auto-style2 {
             width: 404px;
             height: 53px;

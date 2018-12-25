@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableEventValidation = "false" AutoEventWireup="true" CodeBehind="frmReadIDCare.aspx.cs" Inherits="Web.frmReadIDCare" %>
+﻿<%@ Page Language="C#" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="frmReadIDCare.aspx.cs" Inherits="Web.frmReadIDCare" %>
 
 <!DOCTYPE html>
 
@@ -8,8 +8,10 @@
     <title></title>
     <link href="../../Myadmin/css/common.css" rel="stylesheet" type="text/css" />
     <br />
-  <a href="/Myadmin/login.aspx"><input type="text" size="26" style="font-size: 16pt ;border-style:none" value="      首页>数据录入"/></a>
-
+    <a href="/Myadmin/login.aspx">
+        <input type="text" size="26" style="font-size: 16pt; border-style: none" value="      首页>数据录入" /></a>
+    <script src="/Myadmin/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="/Myadmin/js/json2.js" type="text/javascript"></script>
     <script type="text/javascript">
         function MyConfirm() {
             if (confirm("证件号号已存在,确定要继续吗?") == true) {
@@ -20,14 +22,107 @@
             }
             form1.submit();
         }
-      
+        function ClearData() {
+
+        }
+        $(function () {
+            $("#button3").click(function () {
+           
+            });
+        });
+        function readCardImageH() {
+            if (1 == CertCtl.ExportJPGCardH()) {
+                alert(CertCtl.GetJPGCardHBase64());
+            }
+            else {
+                alert("解析横板身份证正反两面图片失败");
+            }
+        }
+
+        function readCardImageV() {
+            if (1 == CertCtl.ExportJPGCardV()) {
+                alert(CertCtl.GetJPGCardVBase64());
+            }
+            else {
+                alert("解析竖板身份证正反两面图片失败");
+            }
+        }
+
+        function readCardImageF() {
+            if (1 == CertCtl.ExportJPGCardF()) {
+                alert(CertCtl.GetJPGCardFBase64());
+            }
+            else {
+                alert("解析横板身份证正面图片失败");
+            }
+        }
+
+        function readCardImageB() {
+            if (1 == CertCtl.ExportJPGCardB()) {
+                alert(CertCtl.GetJPGCardBBase64());
+            }
+            else {
+                alert("解析横板身份证反面图片失败");
+            }
+        }
+
+        function readFPData1() {
+
+            alert(CertCtl.getFirstFPDataBase64());
+        }
+
+        function readFPData2() {
+
+            alert(CertCtl.getSecondFPDataBase64());
+        }
+
+        function ReadCard() {
+            ClearData();
+            var result = CertCtl.ReadCard();
+            var imagel = CertCtl.ExportJPGCardB();
+            var errosinfo = '';
+            var idResultDesc1 = '';
+            if (result == "0") {
+
+                errosinfo = "成功";
+                idResultDesc1 = "读卡成功";
+
+
+            }
+            else {
+
+                errosinfo = "失败";
+                idResultDesc1 = "读卡失败";
+            }
+            var postData = { mingcheng: CertCtl.Name, minzu: CertCtl.Nation, xingbie: CertCtl.Sex, chushengriqi: CertCtl.Born, jiatingzhuzhi: CertCtl.Address, zhengjianhaoma: CertCtl.CardNo, zhengjianyouxiao: CertCtl.EffectedDate + "-" + CertCtl.ExpiredDate, FData: CertCtl.GetJPGCardBBase64(), idResult: errosinfo };//, idResultDesc: idResultDesc1
+
+            $.ajax({
+                type: "post", //要用post方式                 
+                url: "frmReadIDCare.aspx/GetRankedUserDept",//方法所在页面和方法名
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(postData),
+                success: function (data) {
+                    alert(data.d);//返回的数据用data.d获取内容                  
+
+                    window.location.reload();
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            });
+        }
+
     </script>
     <style type="text/css">
    
     </style>
 </head>
 <body>
+    <object id="CertCtl" name="CertCtl" classid="CLSID:10946843-7507-44FE-ACE8-2B3483D179B7" width="0" height="0"></object>
+
     <form id="form1" runat="server">
+
         <input type="hidden" id="hidden1" runat="server" />
         <div>
             <br />
@@ -37,14 +132,13 @@
                     <tr>
                         <th width="30%">数据库*</th>
                         <td>
-                            <asp:TextBox ID="comboBox1" runat="server"   class="select_w150"></asp:TextBox>
+                            <asp:TextBox ID="comboBox1" runat="server" class="select_w150"></asp:TextBox>
                         </td>
                         <th width="30%">登录密码*</th>
                         <td class="auto-style1">
                             <input name="password" type="password" class="select_w150" id="password" size="16" maxlength="100" value="<%=pass%>" readonly="true" /></td>
 
                     </tr>
-
 
                 </tbody>
 
@@ -56,11 +150,16 @@
                 <tr>
                     <td align="center" colspan="5">
                         <div>
+                            <%--  <input type="submit" name="Submit1" value="读卡" class="button" onclick="ReadCard()">--%>
+
+                            <%--  <asp:Button ID="button2" class="ui-btn ui-btn-search" onmouseover="this.className='ui-btn ui-btn-search-hover'"
+                                 onmouseout="this.className='ui-btn ui-btn-search'" runat="server" Text="读取" OnClick="Button1_Click" Width="10%" Height="30px" />--%>
                             <asp:Button ID="button2" class="ui-btn ui-btn-search" onmouseover="this.className='ui-btn ui-btn-search-hover'"
-                                onmouseout="this.className='ui-btn ui-btn-search'" runat="server" Text="读取" OnClick="Button1_Click" Width="10%" Height="30px" />
+                                onmouseout="this.className='ui-btn ui-btn-search'" runat="server" Text="读取" Width="10%" Height="30px" OnClientClick="ReadCard()" />
+
                             &nbsp;&nbsp;&nbsp;
                                     <asp:Button ID="button3" class="ui-btn ui-btn-reset" onmouseover="this.className='ui-btn ui-btn-reset-hover'"
-                                        onmouseout="this.className='ui-btn ui-btn-reset'" runat="server" Text="清空" OnClientClick="reSet();return false;" Width="10%" Height="30px" OnClick="button2_Click" />
+                                        onmouseout="this.className='ui-btn ui-btn-reset'" runat="server"  OnClick="button2_Click" Text="清空" Width="10%" Height="30px" />
                             &nbsp;&nbsp;&nbsp;
                              <asp:Button ID="button1" class="ui-btn ui-btn-search" onmouseover="this.className='ui-btn ui-btn-search-hover'"
                                  onmouseout="this.className='ui-btn ui-btn-search'" runat="server" Text="入库" OnClick="btwrite_Click" Width="10%" Height="30px" />
@@ -75,7 +174,7 @@
                     </td>
 
                 </tr>
-              
+
                 <tr>
 
                     <td align="center" colspan="5">
@@ -93,7 +192,7 @@
                 CellPadding="0" Style="margin-top: 5px;" GridLines="Vertical"
                 EmptyDataText="&lt;span class='ui-icon ui-icon-remind' style='float: left; margin-right: .3em;'&gt;&lt;/span&gt;&lt;strong&gt;提醒：&lt;/strong&gt;对不起！您所查询的数据不存在。" OnRowCommand="GridView_OnRowCommand" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit">
                 <Columns>
-              
+
                     <asp:BoundField HeaderText="代码（即工号）" DataField="daima_gonghao">
                         <%--dengluzhanghao--%>
                         <%--<FooterStyle HorizontalAlign="Left" />--%>

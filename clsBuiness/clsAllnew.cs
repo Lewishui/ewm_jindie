@@ -633,7 +633,7 @@ namespace clsBuiness
             return resulits;
 
         }
-        protected string ImgToBase64String(string Imagefilename)
+        public string ImgToBase64String(string Imagefilename)
         {
             try
             {

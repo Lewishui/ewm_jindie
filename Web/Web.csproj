@@ -75,6 +75,9 @@
     <Content Include="GenericErrorPage.html" />
     <Content Include="Global.asax" />
     <Content Include="Myadmin\changepassword.aspx" />
+    <Content Include="Myadmin\js\jquery-1.7.1.min.js" />
+    <Content Include="Myadmin\js\jquery-1.8.3.min.js" />
+    <Content Include="Myadmin\js\json2.js" />
     <Content Include="Myadmin\login.aspx" />
     <Content Include="Myadmin\css\common.css" />
     <Content Include="Myadmin\images\back_bg.jpg" />

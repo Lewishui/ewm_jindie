@@ -20,12 +20,18 @@ namespace Web
         public string user;
         public string pass;
         private SortableBindingList<clCard_info> sortablePendingOrderList;
+        object ddd;
 
         bool ischeck_zhengjianhaoma = true;
         clsAllnew BusinessHelp;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var username = Request.Form["idResult"];
+            if (username != null)
+            {
+
+            }
             if (!Page.IsPostBack)
             {
                 if (!Page.IsPostBack)
@@ -34,7 +40,7 @@ namespace Web
                     {
                         comboBox1.Text = Cache["servename"].ToString();
                         pass = "123456";
-                        Response.Write(Cache["servename"] + "这里是从缓存中读取的时间");//这里读取的缓存中的时间，刷新页面时，这里的随着时间变化，不会变化。
+                       // Response.Write(Cache["servename"] + "这里是从缓存中读取的时间");//这里读取的缓存中的时间，刷新页面时，这里的随着时间变化，不会变化。
                     }
                     string dengluleibie = Request.QueryString["dengluleibie"];
                     if (dengluleibie == "nologin")
@@ -55,6 +61,9 @@ namespace Web
                 ischeck_zhengjianhaoma = false;
                 this.MyGo();
             }
+            if (IsPostBack)
+
+                bind();
         }
         public class SortableBindingList<T> : BindingList<T>
         {
@@ -179,6 +188,21 @@ namespace Web
             btReadcard_server_Click(null, EventArgs.Empty);
             InitialSystemInfo();
         }
+        public string clear_bind()
+        {
+
+            //gvList.DataSource = readCards;
+
+            //gvList.DataBind();
+                readCards = new List<clCard_info>();
+
+                InitialSystemInfo();
+
+            return "ok";
+
+        }
+
+
         protected void GridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Btn_Operation")
@@ -193,7 +217,8 @@ namespace Web
                     string QiHao = gvList.DataKeys[RowRemark].Value.ToString();
                     string sql2 = "delete from t_Item_3002 where   FItemID='" + QiHao + "'";
 
-                    BusinessHelp.Readt_PICServer(sql2);
+                    //BusinessHelp.Readt_PICServer(sql2);
+                    BusinessHelp.deleteCard(sql2);
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "", "<script>alert('删除成功')</script>");
                     btReadcard_server_Click(null, EventArgs.Empty);
 
@@ -302,6 +327,24 @@ namespace Web
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            string newaddno;
+            int FItemID;
+            Confirm_newCardNO(out newaddno, out FItemID);
+
+            //bs
+
+
+            //cs
+            //readCards = BusinessHelp.Read_card();
+
+            //if (results != null && results.Count > 0)
+            //    readCards = readCards.Concat(results).ToList();
+
+            WriteInput(newaddno, FItemID);
+        }
+
+        private void Confirm_newCardNO(out string newaddno, out int FItemID)
+        {
             btReadcard_server_Click(null, EventArgs.Empty);
 
             BusinessHelp = new clsAllnew();
@@ -326,16 +369,15 @@ namespace Web
             }
 
             int a = Convert.ToInt32(qi) + 1;
-            string newaddno = readCards[0].daima_gonghao.Replace(qi, "") + a.ToString();
+            newaddno = readCards[0].daima_gonghao.Replace(qi, "") + a.ToString();
             readCards.Sort(new China_System.Common.clsCommHelp.Comp1());
 
-            int FItemID = Convert.ToInt32(readCards[0].Order_id) + 1;
+            FItemID = Convert.ToInt32(readCards[0].Order_id) + 1;
             #endregion
-            readCards = BusinessHelp.Read_card();
+        }
 
-            //if (results != null && results.Count > 0)
-            //    readCards = readCards.Concat(results).ToList();
-
+        private void WriteInput(string newaddno, int FItemID)
+        {
             if (readCards != null)
             {
                 readCards[0].daima_gonghao = newaddno;
@@ -417,10 +459,6 @@ namespace Web
                 string msg = "检测第" + readCards[0].zhengjianhaoma.ToString() + " 数据已存在,是否覆盖?'";
                 this.ClientScript.RegisterStartupScript(this.GetType(), msg, "<script>MyConfirm();</script>");
                 isdouble = true;
-
-
-
-
             }
             return isdouble;
         }
@@ -453,7 +491,7 @@ namespace Web
 
         protected void button2_Click(object sender, EventArgs e)
         {
-            bind();
+            clear_bind();
         }
 
         void toExcel(GridView gv)
@@ -524,5 +562,245 @@ namespace Web
             bind();
 
         }
+        [System.Web.Services.WebMethod()]
+        public static string GetRankedUserDept(string mingcheng, string minzu, string xingbie, string chushengriqi, string jiatingzhuzhi, string zhengjianhaoma, string zhengjianyouxiao, string FData, string idResult)//, , string idResultDesc1
+        {
+
+            if (idResult == "失败")
+            {
+
+                return "读卡失败,请确认设备连接正常或将身份证重新放入设备！";
+
+            }
+
+            //确认是否重复
+            List<clCard_info> resulits = new List<clCard_info>();
+            collect_data(mingcheng, minzu, xingbie, chushengriqi, jiatingzhuzhi, zhengjianhaoma, zhengjianyouxiao, FData, resulits);
+
+            #region 假数据
+            //resulits = new List<clCard_info>();
+
+            //resulits = jiashuju();
+
+            #endregion
+
+            bool isdou = CHECK_zhengjianhaoma1(resulits);
+            if (isdou == true)
+            {
+                string msg = "检测第" + resulits[0].zhengjianhaoma.ToString() + " 数据已存在'";
+                return msg;
+            }
+
+            string newaddno;
+            int FItemID;
+            //确认新的号码
+            Confirm_newCardNO_(out newaddno, out FItemID);
+
+            string strResult = string.Empty;
+
+            //重新整理数据
+            //resulits = new List<clCard_info>();
+            //collect_data(mingcheng, minzu, xingbie, chushengriqi, jiatingzhuzhi, zhengjianhaoma, zhengjianyouxiao, FData, resulits);
+
+            strResult = "读取成功";
+
+
+            //写入数据
+            if (resulits[0].mingcheng != null && resulits[0].mingcheng != "")
+                WriteInput1(newaddno, FItemID, resulits, false);
+            else
+                strResult = "信息缺失无法入库";
+
+            return strResult;
+
+        }
+
+        private static List<clCard_info> jiashuju()
+        {
+            clsAllnew BusinessHelp = new clsAllnew();
+
+            string image64 = BusinessHelp.ImgToBase64String(@"D:\Devlop\身份证阅读器二次开发软件说明\cardv.jpg");
+            //string m_strPath = Application.StartupPath;
+
+            //Base64ToImage(image64).Save(m_strPath + "\\Hello.jpg");
+            //  string mdbpath2_Ctirx = AppDomain.CurrentDomain.BaseDirectory + "\\Hello.jpg";//记录 Status  click 和选择哪个服务器
+
+            //BusinessHelp.Base64ToImage(image64).Save(mdbpath2_Ctirx);
+
+
+            List<clCard_info> reads1 = new List<clCard_info>();
+
+
+            clCard_info item = new clCard_info();
+            item.daima_gonghao = "d1ll";
+            item.zhengjianhaoma = "12345";
+            item.tupian = item.zhengjianhaoma;
+            item.FData = image64;
+
+            reads1.Add(item);
+
+            return reads1;
+        }
+
+        private static void collect_data(string mingcheng, string minzu, string xingbie, string chushengriqi, string jiatingzhuzhi, string zhengjianhaoma, string zhengjianyouxiao, string FData, List<clCard_info> resulits)
+        {
+            clCard_info item = new clCard_info();
+            //姓名
+            item.mingcheng = mingcheng.ToString();
+
+            //民族/国家
+            item.minzu = minzu.ToString();
+            //性别 
+            item.xingbie = xingbie.ToString();
+            //出生 
+            item.chushengriqi = chushengriqi.ToString();
+
+            //地址 
+            item.jiatingzhuzhi = jiatingzhuzhi;
+
+            //号码 
+            item.zhengjianhaoma = zhengjianhaoma.ToString();
+
+            //有效期 
+            item.zhengjianyouxiao = zhengjianyouxiao.ToString();
+
+            //图片
+
+            item.tupian = item.zhengjianhaoma;
+            item.FData = FData.ToString();
+
+            resulits.Add(item);
+        }
+
+
+        private static void Confirm_newCardNO_(out string newaddno, out int FItemID)
+        {
+            clsAllnew BusinessHelp = new clsAllnew();
+            //gohome1();
+            List<clCard_info> readCards = new List<clCard_info>();
+            string conditions = "select * from t_Item_3002";//成功
+
+            readCards = BusinessHelp.Readt_ItemServer(conditions);
+
+            //InitialSystemInfo();
+
+
+            //  gohome1();
+
+            if (readCards == null)
+                readCards = new List<clCard_info>();
+            readCards.Sort(new China_System.Common.clsCommHelp.Comp());
+
+            #region 新的员工号
+            string qi = DateTime.Now.ToString("yyyyMMddss");
+
+            if (readCards == null || readCards.Count == 0)
+            {
+                qi = DateTime.Now.ToString("yyyyMMddss");
+            }
+            else
+            {
+                //ClaimReport_Server.Sort(new Comp());
+                qi = System.Text.RegularExpressions.Regex.Replace(readCards[0].daima_gonghao, @"[^0-9]+", "");
+
+            }
+
+            int a = Convert.ToInt32(qi) + 1;
+            newaddno = readCards[0].daima_gonghao.Replace(qi, "") + a.ToString();
+            readCards.Sort(new China_System.Common.clsCommHelp.Comp1());
+
+            FItemID = Convert.ToInt32(readCards[0].Order_id) + 1;
+            #endregion
+        }
+
+        private static void gohome1()
+        {
+            clsAllnew BusinessHelp = new clsAllnew();
+
+            //if (BusinessHelp.ConStr == null || BusinessHelp.ConStr == null)
+            //    Response.Redirect("~/Myadmin/login.aspx");
+        }
+        private static void WriteInput1(string newaddno, int FItemID, List<clCard_info> readCards, bool ischeck_zhengjianhaoma)
+        {
+            if (readCards != null)
+            {
+                readCards[0].daima_gonghao = newaddno;
+                readCards[0].Order_id = FItemID.ToString();
+                if (ischeck_zhengjianhaoma == true)
+                {
+                    bool isdouble = CHECK_zhengjianhaoma1(readCards);
+                    if (isdouble == false)
+                    {
+                        btwrite_1(readCards);
+
+
+                        //   bind1();
+                    }
+                    else
+                        return;
+                }
+                else
+                {
+                    btwrite_1(readCards);
+                    //   bind1();
+                }
+            }
+        }
+        private static bool CHECK_zhengjianhaoma1(List<clCard_info> readCards)
+        {
+            clsAllnew BusinessHelp = new clsAllnew();
+
+            bool isdouble = false;
+
+            string conditions = "select * from t_Item_3002  where   F_104='" + readCards[0].zhengjianhaoma + "'";//成功
+
+            List<clCard_info> FindreadCards = BusinessHelp.Readt_ItemServer(conditions);
+            if (FindreadCards.Count > 0)
+            {
+                ///   Page.ClientScript.RegisterStartupScript(this.GetType(), "", "<script>alert('证件号号已存在')</script>");
+                //Button1.Attributes.Add("onclick", "chkData()");
+                //ShowConfirm("123", "", "");
+                // Page.ClientScript.RegisterStartupScript(Page.GetType(), "", "<script>if(confirm('确认添加？'))alert('点击了确定');else alert('点击了取消')</script>");
+
+                //Response.Write("<script>confirm('aaaaaaaaa')</script>");
+
+                string msg = "检测第" + readCards[0].zhengjianhaoma.ToString() + " 数据已存在,是否覆盖?'";
+                //  this.ClientScript.RegisterStartupScript(this.GetType(), msg, "<script>MyConfirm();</script>");
+                isdouble = true;
+            }
+            return isdouble;
+        }
+        private static void btwrite_1(List<clCard_info> readCards)
+        {
+
+            clsAllnew BusinessHelp = new clsAllnew();
+            //   gohome();
+            if (readCards != null && readCards.Count > 0)
+            {
+                string sql2 = "delete from t_Item_3002 where   F_104='" + readCards[0].zhengjianhaoma + "'";
+
+                BusinessHelp.deleteCard(sql2);
+            }
+            BusinessHelp.createICcard_info_Server(readCards);
+            //更新图片
+            if (readCards != null && readCards.Count > 0)
+            {
+                string sql2 = "delete from t_Accessory where   FItemID='" + readCards[0].Order_id + "'";
+
+                BusinessHelp.deleteCard(sql2);
+            }
+            readCards[0].FTypeID = "3002";
+
+            BusinessHelp.createPIC_info_Server(readCards);
+
+
+            //alterinfo = "添加用户成功！";
+
+
+        }
+
+
+
+
     }
 }

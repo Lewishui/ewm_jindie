@@ -384,14 +384,45 @@ div {
     float: left;
     width: 400px;
     height: 530px;
-    padding: 300px 0 0 0px;
+    padding: 300px 0 0 50px;
     color: #73938E;
 }
+
 .dbweizhi {
-   /*float: none;*/
+    /*float: none;*/
     /*width: 400px;
-    height: 530px;*/ 
+    height: 530px;*/
     padding: 0px 0px 0 0px;
     color: #73938E;
 }
-.ui-login-footer {margin-top:20px;	line-height:40px;	text-align:center;}
+
+.ui-login-footer {
+    margin-top: 20px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.ui-btn ui-btn-search {
+    font-family: "Arail", "Œ¢»Ì—≈∫⁄";
+    font-size: 12pt;
+    color: #ffffff;
+    border: 0px #93bee2 solid;
+    background-color: #7AC143;
+    width: 120px;
+    height: 34px;
+    border-radius: 3px;
+    CURSOR: hand;
+}
+
+.select {
+    position: absolute;
+    width: 297px;
+    height: 58px;
+    padding: 0 24px 0 8px;
+    color: #fff;
+    font: 12px/21px arial,sans-serif;
+    background: url(select.png) no-repeat; /*span±≥æ∞Õº∆¨£¨∆‰ µæÕ «dropdownlistÕº∆¨*/
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+}

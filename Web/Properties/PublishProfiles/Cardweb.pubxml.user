@@ -16,7 +16,7 @@
       <publishTime>12/21/2018 22:48:52</publishTime>
     </File>
     <File Include="bin/clsBuiness.dll">
-      <publishTime>12/25/2018 10:41:14</publishTime>
+      <publishTime>12/25/2018 16:09:10</publishTime>
     </File>
     <File Include="bin/SDZdb.dll">
       <publishTime>12/21/2018 22:21:51</publishTime>
@@ -25,7 +25,7 @@
       <publishTime>12/21/2018 22:27:50</publishTime>
     </File>
     <File Include="bin/Web.dll">
-      <publishTime>12/25/2018 11:09:41</publishTime>
+      <publishTime>12/25/2018 17:31:52</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>11/23/2018 10:03:04</publishTime>
@@ -43,7 +43,7 @@
       <publishTime>12/25/2018 10:19:16</publishTime>
     </File>
     <File Include="frmReadIDCare.aspx">
-      <publishTime>12/21/2018 15:43:29</publishTime>
+      <publishTime>12/25/2018 17:31:25</publishTime>
     </File>
     <File Include="frmUserManger.aspx">
       <publishTime>12/13/2018 18:40:45</publishTime>
@@ -58,7 +58,7 @@
       <publishTime>12/13/2018 18:38:46</publishTime>
     </File>
     <File Include="Myadmin/css/common.css">
-      <publishTime>12/21/2018 15:22:01</publishTime>
+      <publishTime>12/25/2018 17:06:06</publishTime>
     </File>
     <File Include="Myadmin/images/back_bg.jpg">
       <publishTime>12/21/2016 09:51:42</publishTime>
@@ -215,6 +215,15 @@
     </File>
     <File Include="Myadmin/Inc/pingyin.asp">
       <publishTime>12/21/2016 09:51:50</publishTime>
+    </File>
+    <File Include="Myadmin/js/jquery-1.7.1.min.js">
+      <publishTime>12/25/2018 14:07:28</publishTime>
+    </File>
+    <File Include="Myadmin/js/jquery-1.8.3.min.js">
+      <publishTime>12/25/2018 14:07:05</publishTime>
+    </File>
+    <File Include="Myadmin/js/json2.js">
+      <publishTime>12/25/2018 14:36:21</publishTime>
     </File>
     <File Include="Myadmin/js/nav.js">
       <publishTime>12/21/2016 09:51:52</publishTime>
@@ -835,7 +844,7 @@
       <publishTime>12/21/2016 09:52:42</publishTime>
     </File>
     <File Include="Myadmin/login.aspx">
-      <publishTime>12/21/2018 16:46:57</publishTime>
+      <publishTime>12/25/2018 13:32:39</publishTime>
     </File>
     <File Include="Myadmin/PicUpload/getProcess.asp">
       <publishTime>12/21/2016 09:52:44</publishTime>
@@ -857,6 +866,12 @@
     </File>
     <File Include="NoAccess.html">
       <publishTime>12/25/2018 10:55:57</publishTime>
+    </File>
+    <File Include="sample/index.html">
+      <publishTime>12/17/2018 14:36:33</publishTime>
+    </File>
+    <File Include="sample/jquery.js">
+      <publishTime>05/08/2015 18:40:52</publishTime>
     </File>
     <File Include="Scripts/Common.js">
       <publishTime>06/28/2018 20:17:45</publishTime>
