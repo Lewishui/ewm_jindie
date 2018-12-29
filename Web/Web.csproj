@@ -74,6 +74,7 @@
     <Content Include="frmUserManger.aspx" />
     <Content Include="GenericErrorPage.html" />
     <Content Include="Global.asax" />
+    <Content Include="Myadmin\logout.aspx" />
     <Content Include="Myadmin\changepassword.aspx" />
     <Content Include="Myadmin\js\jquery-1.7.1.min.js" />
     <Content Include="Myadmin\js\jquery-1.8.3.min.js" />
@@ -396,6 +397,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Myadmin\logout.aspx.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Myadmin\logout.aspx.designer.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Myadmin\changepassword.aspx.cs">
       <DependentUpon>changepassword.aspx</DependentUpon>

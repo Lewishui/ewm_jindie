@@ -151,7 +151,7 @@
 
 
                                 </tr>
-                                <tr>
+                              <%--  <tr>
                                     <td align="center" colspan="5">
                                         <asp:Button ID="Button1" runat="server" Text=" 游客登录 " class="NOLoginSub" OnClick="HtmlNOlogin_Click" Visible="True" Width="285px" />
                                         <br />
@@ -159,7 +159,7 @@
                                        <%=alterinfo1%>
                                         </asp:Label>
                                     </td>
-                                </tr>
+                                </tr>--%>
                             </table>
                         </div>
                         <div class="clearfix"></div>

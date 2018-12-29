@@ -187,7 +187,7 @@ namespace Web
 
             item.jigoudaima = this.comboBox1.Text.Trim();
             item.mibao = this.textBox4.Text.Trim();
-            
+
             item.Createdate = DateTime.Now.ToString("yyyy/MM/dd/HH");
 
             userlist_Server.Add(item);
@@ -208,7 +208,7 @@ namespace Web
             this.gvList.AutoGenerateColumns = false;
             sortablePendingOrderList = new SortableBindingList<clsuserinfo>(Result_Server);
             //this.bindingSource1.DataSource = sortablePendingOrderList;
-            this.gvList.DataSource =  sortablePendingOrderList;
+            this.gvList.DataSource = sortablePendingOrderList;
             this.gvList.DataBind();
         }
         protected void button2_Click(object sender, EventArgs e)
@@ -220,7 +220,7 @@ namespace Web
             if (e.CommandName == "Btn_Operation")
             {
                 int RowRemark = Convert.ToInt32(e.CommandArgument);
-          
+
                 string QiHao = gvList.Rows[RowRemark].Cells[1].Text.ToString();
                 clsAllnew BusinessHelp = new clsAllnew();
 
@@ -228,5 +228,8 @@ namespace Web
                 InitialSystemInfo();
             }
         }
+       
+
+
     }
 }

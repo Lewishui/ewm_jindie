@@ -22,6 +22,7 @@
             }
 
         }
+
         //$(document).ready(function () {
 
         //    $('select').addClass("form-control");
@@ -49,6 +50,7 @@
             top: 0px;
             left: 0px;
         }
+
         .auto-style2 {
             width: 404px;
             height: 53px;
@@ -59,6 +61,10 @@
 <body>
     <div class="mains">
         <div class="inners">
+            <p>
+                <span style="font-size: 12pt"  align="left" class="font_gray">建议使用IE浏览器</span>
+
+            </p>
             <div class="lefts">
 
                 <p align="left" class="pname">
@@ -92,7 +98,7 @@
                                         </p>
                                     </td>
                                     <td class="auto-style1">
-                                        <asp:DropDownList ID="DropDownList1" runat="server" style="color: wheat ;background-color: black" class="select_w150"  ></asp:DropDownList>
+                                        <asp:DropDownList ID="DropDownList1" runat="server" Style="color: wheat; background-color: black" class="select_w150"></asp:DropDownList>
 
                                     </td>
                                 </tr>
@@ -145,7 +151,7 @@
 
 
                                 </tr>
-                                <tr>
+                              <%--  <tr>
                                     <td align="center" colspan="5">
                                         <asp:Button ID="Button1" runat="server" Text=" 游客登录 " class="NOLoginSub" OnClick="HtmlNOlogin_Click" Visible="True" Width="285px" />
                                         <br />
@@ -153,7 +159,7 @@
                                        <%=alterinfo1%>
                                         </asp:Label>
                                     </td>
-                                </tr>
+                                </tr>--%>
                             </table>
                         </div>
                         <div class="clearfix"></div>
@@ -164,12 +170,12 @@
             </div>
 
         </div>
-    <%--    <div class="ui-login-footer">
-            <p >
-                <span class="font_gray">云合未来计算机技术有限公司  © Copyright 2018-2020  技术支持：信息技术中心   联系电话：16619776280</span>
+        <div class="ui-login-footer">
+            <p>
+                <%--<span class="font_gray">云合未来计算机技术有限公司  © Copyright 2018-2020  技术支持：信息技术中心   联系电话：16619776280</span>--%>
 
             </p>
-        </div>--%>
+        </div>
     </div>
 
 </body>

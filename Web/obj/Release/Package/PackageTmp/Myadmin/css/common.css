@@ -384,25 +384,124 @@ div {
     float: left;
     width: 400px;
     height: 530px;
-    padding: 300px 0 0 0px;
+    padding: 300px 0 0 50px;
     color: #73938E;
 }
+
 .dbweizhi {
-   /*float: none;*/
+    /*float: none;*/
     /*width: 400px;
-    height: 530px;*/ 
+    height: 530px;*/
     padding: 0px 0px 0 0px;
     color: #73938E;
 }
-.ui-login-footer {margin-top:20px;	line-height:40px;	text-align:center;}
+
+.ui-login-footer {
+    margin-top: 20px;
+    line-height: 40px;
+    text-align: center;
+}
+
 .ui-btn ui-btn-search {
     font-family: "Arail", "Œ¢»Ì—≈∫⁄";
     font-size: 12pt;
     color: #ffffff;
-    border: 0px #93bee2 solid; 
+    border: 0px #93bee2 solid;
+    background-color: #7AC143;
+    width: 120px;
+    height: 754px;
+    border-radius: 3px;
+    CURSOR: hand;
+}
+
+.select {
+    position: absolute;
+    width: 297px;
+    height: 58px;
+    padding: 0 24px 0 8px;
+    color: #fff;
+    font: 12px/21px arial,sans-serif;
+    background: url(select.png) no-repeat; /*span±≥æ∞Õº∆¨£¨∆‰ µæÕ «dropdownlistÕº∆¨*/
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+}
+
+.trbackcolor {
+    /*color: #3399CC;*/
+    background-color: #EBF2F9;
+}
+
+.textfield {
+    padding: 1px;
+    cursor: hand;
+    display: inline;
+    color: #000000;
+    float: left;
+    width: 550px;
+    height: 30px;
+    font-weight: normal;
+    border: 1px solid #A0BACD;
+    background: #FFFFFF;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 12px;
+    font-family: Tahoma, Verdana;
+    text-align: left;
+}
+
+.textfield1 {
+    text-align: right;
+    font: 18px/21px arial,sans-serif;
+}
+
+.textfield2 {
+    text-align: right;
+    font: 22px/21px arial,sans-serif;
+    color: #73938E;
+}
+
+.button {
+    font-family: "Arail", "Œ¢»Ì—≈∫⁄";
+    font-size: 12pt;
+    color: #ffffff;
+    border: 0px #93bee2 solid;
+    /*background-image:url(<img src="./imege/button-≥£Ã¨.png" />);*/
     background-color: #7AC143;
     width: 120px;
     height: 34px;
     border-radius: 3px;
     CURSOR: hand;
+    font-style: normal;
+}
+
+table.gridview_m {
+    border-collapse: collapse;
+    border: solid 1px #93c2f1;
+    width: 98%;
+    font-size: 10pt;
+}
+
+.Show_infomation {
+    font-size: 20px;
+    margin: 5px 5px 5px 5px;
+}
+
+.title {
+    margin-bottom: 15px;
+    padding-left: 10px;
+    line-height: 30px;
+    background: #EBF2F9;
+    font-size: 12px;
+}
+
+.headerContainer {
+    clear: both;
+    width: 100%;
+    float: left;
+    margin: 0 0 6px 0;
+    /*background: url(../images/top_bg.jpg) no-repeat center  top;*/
+}
+.headerContainer1 {
+   
 }

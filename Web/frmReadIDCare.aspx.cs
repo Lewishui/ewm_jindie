@@ -21,7 +21,7 @@ namespace Web
         public string pass;
         private SortableBindingList<clCard_info> sortablePendingOrderList;
         object ddd;
-
+        public string Show_infomation;
         bool ischeck_zhengjianhaoma = true;
         clsAllnew BusinessHelp;
 
@@ -412,6 +412,7 @@ namespace Web
             this.gvList.DataSource = sortablePendingOrderList;
             gvList.DataKeyNames = new string[] { "Order_id" };//主键
             this.gvList.DataBind();
+            Show_infomation = "共计 " + sortablePendingOrderList.Count() + " 条";
         }
 
         protected void btwrite_Click(object sender, EventArgs e)
