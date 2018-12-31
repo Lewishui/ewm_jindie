@@ -32,11 +32,11 @@
             //Server.Transfer("/Myadmin/login.aspx", true);
             window.location.href = "/Myadmin/login.aspx";
         }
-        $(function () {
-            $("#button3").click(function () {
+        //$(function () {
+        //    $("#button3").click(function () {
 
-            });
-        });
+        //    });
+        //});
         function readCardImageH() {
             if (1 == CertCtl.ExportJPGCardH()) {
                 alert(CertCtl.GetJPGCardHBase64());
@@ -85,39 +85,65 @@
 
         function ReadCard() {
             ClearData();
+            CertCtl.IsRepeat(false);
+
             var result = CertCtl.ReadCard();
             var imagel = CertCtl.ExportJPGCardB();
+            //var imagel1 = CertCtl.ExportJPGCardF();
+            var imagelall = CertCtl.ExportJPGCardV();
+
             var errosinfo = '';
             var idResultDesc1 = '';
             if (result == "0") {
 
                 errosinfo = "成功";
                 idResultDesc1 = "读卡成功";
-
+              //  alert("读卡成功+");
 
             }
             else {
 
                 errosinfo = "失败";
                 idResultDesc1 = "读卡失败";
+            //    alert("读卡失败+");
             }
-            var postData = { mingcheng: CertCtl.Name, minzu: CertCtl.Nation, xingbie: CertCtl.Sex, chushengriqi: CertCtl.Born, jiatingzhuzhi: CertCtl.Address, zhengjianhaoma: CertCtl.CardNo, zhengjianyouxiao: CertCtl.EffectedDate + "-" + CertCtl.ExpiredDate, FData: CertCtl.GetJPGCardBBase64(), idResult: errosinfo };//, idResultDesc: idResultDesc1
+            //
+            //if (imagel == "0") {
+
+            //}
+            //else
+            //    alert("ExportJPGCardB失败+");
+            ////
+            //if (imagelall == "0") {
+
+            //}
+            //else
+            //    alert("ExportJPGCardV失败+");
+
+
+
+            //alert("全//"+CertCtl.GetJPGCardVBase64());
+            //alert("正//"+CertCtl.GetJPGCardBBase64());
+
+            var postData = { mingcheng: CertCtl.Name, minzu: CertCtl.Nation, xingbie: CertCtl.Sex, chushengriqi: CertCtl.Born, jiatingzhuzhi: CertCtl.Address, zhengjianhaoma: CertCtl.CardNo, zhengjianyouxiao: CertCtl.EffectedDate + "-" + CertCtl.ExpiredDate, FData: CertCtl.GetJPGCardVBase64(), FDataF: CertCtl.GetJPGCardBBase64(), idResult: errosinfo };//, idResultDesc: idResultDesc1
 
             $.ajax({
                 type: "post", //要用post方式                 
                 url: "frmReadIDCare.aspx/GetRankedUserDept",//方法所在页面和方法名
                 contentType: "application/json; charset=utf-8",
+                async: false,
                 dataType: "json",
                 data: JSON.stringify(postData),
                 success: function (data) {
-                    alert(data.d);//返回的数据用data.d获取内容                  
 
-                    window.location.reload();
+                    alert(data.d);//返回的数据用data.d获取内容
+                  //  window.location.reload();
                 },
                 error: function (err) {
                     alert(err);
                 }
             });
+            //  __doPostBack('bind', '');
         }
         function exitSystem() {
             if (confirm('确认退出吗?')) {
@@ -148,10 +174,10 @@
             </a>
         </div>
         <hr />
-        <div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="/Myadmin/logout.aspx""  >退出登录</a> </div>
-        <%--    <a href="#" onclick="nvhome();" id="aa" class="title">
-            <input type="text" size="26" style="font-size: 14pt; border-style: none" class="trbackcolor" value="      首页>数据录入" />
-        </a>--%>
+        <div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="/Myadmin/logout.aspx""  >退出登录</a>
+
+        </div>
+  
     </div>
     <br />
 
@@ -191,7 +217,7 @@
                             <%--  <asp:Button ID="button2" class="ui-btn ui-btn-search" onmouseover="this.className='ui-btn ui-btn-search-hover'"
                                  onmouseout="this.className='ui-btn ui-btn-search'" runat="server" Text="读取" OnClick="Button1_Click" Width="10%" Height="30px" />--%>
                             <asp:Button ID="button2" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
-                                onmouseout="this.className='button'" runat="server" Text="读取" Width="10%" Height="30px" OnClientClick="ReadCard()" />
+                                onmouseout="this.className='button'" runat="server" Text="读取" Width="10%" Height="30px" OnClientClick="ReadCard()" OnClick="button2_Click1" />
 
                             &nbsp;&nbsp;&nbsp;
                                     <asp:Button ID="button3" class="button" onmouseover="this.className='ui-btn ui-btn-reset-hover'"
@@ -236,7 +262,7 @@
             <asp:GridView ID="gvList" runat="server" Width="90%" AutoGenerateColumns="False"
                 CssClass="mGrid" align="center"
                 CellPadding="0" Style="margin-top: 5px;" GridLines="Vertical"
-                EmptyDataText="&lt;span class='ui-icon ui-icon-remind' style='float: left; margin-right: .3em;'&gt;&lt;/span&gt;&lt;strong&gt;提醒：&lt;/strong&gt;对不起！您所查询的数据不存在。" OnRowCommand="GridView_OnRowCommand" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit">
+                EmptyDataText="&lt;span class='ui-icon ui-icon-remind' style='float: left; margin-right: .3em;'&gt;&lt;/span&gt;&lt;strong&gt;提醒：&lt;/strong&gt;对不起！您所查询的数据不存在。" OnRowCommand="GridView_OnRowCommand" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" ViewStateMode="Disabled">
                 <Columns>
 
                     <asp:BoundField HeaderText="代码（即工号）" DataField="daima_gonghao">

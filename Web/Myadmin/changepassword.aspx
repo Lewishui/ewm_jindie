@@ -19,7 +19,7 @@
             </a>
         </div>
         <hr />
-        <div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="http://bbs.sycms.com" target="_blank">退出登录</a> </div>
+        <div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="logout.aspx">退出登录</a> </div>
 
     </div>
     <form id="form1" runat="server">

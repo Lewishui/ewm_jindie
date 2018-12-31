@@ -46,6 +46,17 @@ namespace Web
                 DropDownList1.DataBind();
                 DropDownList1.Items.Insert(0, new ListItem("选择", "绑定数据"));
 
+                HttpCookie cookie1 = Request.Cookies["MyCook"];
+
+                if (cookie1 != null && cookie1["servename"].ToString() != "")
+                {
+                    DropDownList1.SelectedItem.Text = cookie1["servename"].ToString();
+
+                    //  Response.Write("cookie=" + cookie1["servename"].ToString());
+
+                }
+
+
             }
         }
 
@@ -57,7 +68,23 @@ namespace Web
             string txtSAPPassword = Request.Form["password"];
             string servename = DropDownList1.SelectedItem.Text;//这是获取选中的文本值
             string ab = DropDownList1.SelectedValue;//获取DropDownList中你设定的Value值
-            Cache["servename"] = servename; 
+            Cache["servename"] = servename;
+         //   Session["servename"] = servename;
+
+            HttpCookie cookie = new HttpCookie("MyCook");//初使化并设置Cookie的名称
+            cookie.Values.Set("servename", servename);
+            cookie.Expires = System.DateTime.Now.AddYears(100);
+
+            Response.SetCookie(cookie);
+            HttpCookie cookie1 = Request.Cookies["MyCook"];
+
+            if (cookie1 != null && cookie1["servename"].ToString() != "")
+            {
+                string dsdd = cookie1["servename"].ToString();
+
+              //  Response.Write("cookie=" + cookie1["servename"].ToString());
+
+            }
 
             user = username;
             pass = txtSAPPassword;

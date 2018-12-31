@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -207,8 +208,12 @@ namespace clsBuiness
         static extern int getVisaTimes();//获取签发次数
 
         #endregion
+        public string rev_servename;
+
         public clsAllnew()
         {
+
+
             if (HttpRuntime.Cache.Get("servename") != null)
             {
                 var objCache = HttpRuntime.Cache.Get("servename");
@@ -222,7 +227,24 @@ namespace clsBuiness
             }
             else
             {
+                if (HttpContext.Current.Request.Cookies["MyCook"] != null)
+                {
+                    HttpCookie cookie1 = HttpContext.Current.Request.Cookies["MyCook"];
 
+                    if (cookie1 != null && cookie1["servename"].ToString() != "")
+                    {
+                        rev_servename = cookie1["servename"].ToString();
+
+                        // var rev_servename = HttpContext.Current.Session["servename"];
+                        if (rev_servename != "" && rev_servename != null)
+                        {
+
+                            ConStr = System.Web.Configuration.WebConfigurationManager.AppSettings[cookie1["servename"].ToString()];
+                            ConStrPIC = ConStr.Replace("Provider=SQLOLEDB;", "");
+
+                        }
+                    }
+                }
             }
 
         }
@@ -278,9 +300,18 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
+              //  inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
 
-                throw;
+                throw ex;
             }
+        }
+        private static void inputlog(string aainput)
+        {
+            string A_Path = AppDomain.CurrentDomain.BaseDirectory + "bin\\log.txt";
+            StreamWriter sw = new StreamWriter(A_Path);
+            sw.WriteLine(aainput);
+            sw.Flush();
+            sw.Close();
         }
         public void createUser_Server(List<clsuserinfo> AddMAPResult)
         {
@@ -679,7 +710,7 @@ namespace clsBuiness
                 {
 
                     string sql = "";
-                    sql = "insert into t_Item_3002(FNumber,FName,F_101,F_108,F_109,F_103,F_104,F_106,F_127,F_105,FItemID) values ('" + item.daima_gonghao + "','" + item.mingcheng + "',N'" + item.xingbie + "','" + item.minzu + "','" + item.chushengriqi + "','" + item.zhengjianleixing + "','" + item.zhengjianhaoma + "','" + item.jiatingzhuzhi + "','" + item.zhengjianyouxiao + "','" + item.jiguan + "','" + item.Order_id + "')";
+                    sql = "insert into t_Item_3002(FNumber,FName,F_101,F_108,F_109,F_103,F_104,F_106,F_127,F_105,FItemID) values ('" + item.daima_gonghao + "','" + item.mingcheng + "',N'" + item.xingbie + "',N'"+ item.minzu + "','" + item.chushengriqi + "','" + item.zhengjianleixing + "','" + item.zhengjianhaoma + "','" + item.jiatingzhuzhi + "','" + item.zhengjianyouxiao + "','" + item.jiguan + "','" + item.Order_id + "')";
 
                     OleDbCommand cmd = new OleDbCommand(sql, con);
                     cmd.ExecuteNonQuery();
@@ -691,9 +722,14 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
+              
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
+
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+
+                throw ex;
                 return;
 
                 throw;
@@ -714,7 +750,6 @@ namespace clsBuiness
                 foreach (clCard_info item in AddMAPResult)
                 {
 
-
                     #region 之前
                     //string sql = "";
                     //sql = "insert into t_Accessory(FTypeID,FItemID,FFileName,FData,FVersion,FSaveMode,FPage,FEntryID) values ('" + item.FTypeID + "','" + item.Order_id + "',N'" + item.tupian + "','" + item.FData + "','" + item.FVersion + "','" + item.FSaveMode + "','" + item.FPage + "','" + item.FEntryID + "')";
@@ -725,11 +760,24 @@ namespace clsBuiness
                     #endregion
 
                     #region sql 插入图片
+                    string A_Path = AppDomain.CurrentDomain.BaseDirectory + "bin\\img.txt";//记录 Status  click 和选择哪个服务器
+                    //if (File.Exists(A_Path))
+                    {
+                        //   mdbpath2_Ctirx = Base64StringToImage(A_Path, AddMAPResult[0].FTypeID);
+                    }
+                    #region 读取本地记事本
+                    //FileStream ifs = new FileStream(A_Path, FileMode.Open, FileAccess.Read);
+                    //StreamReader sr = new StreamReader(ifs);
+                    ////读取txt里面的内容
+                    //String inputStr = sr.ReadToEnd();
 
-                    FileStream fs = new FileStream(mdbpath2_Ctirx, FileMode.Open, FileAccess.Read);
-                    Byte[] btye2 = new byte[fs.Length];
-                    fs.Read(btye2, 0, Convert.ToInt32(fs.Length));
-                    fs.Close();
+                    //AddMAPResult[0].FTypeID = inputStr;
+                    #endregion
+                    //  FileStream fs = new FileStream(mdbpath2_Ctirx, FileMode.Open, FileAccess.Read);
+                    //Byte[] btye2 = new byte[fs.Length];
+                    byte[] btye2 = Convert.FromBase64String(AddMAPResult[0].FData);
+                    //fs.Read(btye2, 0, Convert.ToInt32(fs.Length));
+                    //fs.Close();
                     using (SqlConnection conn = new SqlConnection(ConStrPIC))
                     {
                         conn.Open();
@@ -748,7 +796,7 @@ namespace clsBuiness
                         par2.Value = item.Order_id;
                         cmd1.Parameters.Add(par2);
 
-                        SqlParameter par3 = new SqlParameter("@FFileName", SqlDbType.Int);
+                        SqlParameter par3 = new SqlParameter("@FFileName", SqlDbType.Char);
                         par3.Value = item.zhengjianhaoma;
                         cmd1.Parameters.Add(par3);
                         int t = (int)(cmd1.ExecuteNonQuery());
@@ -784,14 +832,60 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
+               
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+      
                 return;
 
                 throw;
             }
             finally { if (con.State == ConnectionState.Open) con.Close(); con.Dispose(); }
+        }
+        /// <summary>
+        /// base64编码的文本 转为    图片
+        /// </summary>
+        /// <param name="txtFileName">Base编码的txt文本路径 </param>
+        private string Base64StringToImage(string txtFileName, string bodytx)
+        {
+            try
+            {
+                //FileStream ifs = new FileStream(txtFileName, FileMode.Open, FileAccess.Read);
+                //StreamReader sr = new StreamReader(ifs);
+                ////读取txt里面的内容
+                //String inputStr = sr.ReadToEnd();
+
+                //转图片 
+                byte[] bt = Convert.FromBase64String(bodytx);
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(bt);
+                Bitmap bmp = new Bitmap(stream);
+
+                string fileName = txtFileName.Substring(0, txtFileName.IndexOf("."));
+
+                if (File.Exists(fileName))
+                {
+                    File.Delete(fileName);
+                }
+                //存储到服务器 上 
+                bmp.Save(fileName + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                //bmp.Save(fileName + ".bmp", ImageFormat.Bmp);
+                //bmp.Save(fileName + ".gif", ImageFormat.Gif);
+                //bmp.Save(fileName + ".png", ImageFormat.Png);
+                stream.Close();
+                //sr.Close();
+                //ifs.Close();
+                return fileName + ".jpg";
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+      
+                //("Base64StringToImage 转换失败\nException：" + ex.Message);
+            }
+            return "";
+
         }
 
         public List<clCard_info> Readt_PICServer(string conditions)
@@ -845,75 +939,86 @@ namespace clsBuiness
         public List<clCard_info> Readt_ItemServer(string conditions)
         {
 
-            OleDbConnection aConnection = new OleDbConnection(ConStr);
-
-            List<clCard_info> ClaimReport_Server = new List<clCard_info>();
-            if (aConnection.State == ConnectionState.Closed)
-                aConnection.Open();
-
-            OleDbDataAdapter myDataAdapter = new OleDbDataAdapter(conditions, aConnection);
-            OleDbCommandBuilder mybuilder = new OleDbCommandBuilder(myDataAdapter);
-            DataSet ds = new DataSet();
-            myDataAdapter.Fill(ds, "t_Item_3002");
-            foreach (DataRow reader in ds.Tables["t_Item_3002"].Rows)
+            try
             {
-                clCard_info item = new clCard_info();
+                OleDbConnection aConnection = new OleDbConnection(ConStr);
 
-                if (reader["FItemID"].ToString() != "")
-                    item.Order_id = reader["FItemID"].ToString();
-                if (reader["FNumber"].ToString() != "")
-                    item.daima_gonghao = reader["FNumber"].ToString();
-                if (reader["FName"].ToString() != "")
-                    item.mingcheng = reader["FName"].ToString();
-                //if (reader["FName"].ToString() != "")
-                //    item.quanming = reader["FName"].ToString();
-                if (reader["F_101"].ToString() != "")
-                    item.xingbie = reader["F_101"].ToString();
+                List<clCard_info> ClaimReport_Server = new List<clCard_info>();
+                if (aConnection.State == ConnectionState.Closed)
+                    aConnection.Open();
 
-                if (reader["F_108"].ToString() != "")
-                    item.minzu = reader["F_108"].ToString();
-                if (reader["F_109"].ToString() != "")
+                OleDbDataAdapter myDataAdapter = new OleDbDataAdapter(conditions, aConnection);
+                OleDbCommandBuilder mybuilder = new OleDbCommandBuilder(myDataAdapter);
+                DataSet ds = new DataSet();
+                myDataAdapter.Fill(ds, "t_Item_3002");
+                foreach (DataRow reader in ds.Tables["t_Item_3002"].Rows)
                 {
-                    item.chushengriqi = reader["F_109"].ToString();
-                    item.chushengriqi = clsCommHelp.objToDateTime1(reader["F_109"].ToString());
+                    clCard_info item = new clCard_info();
 
+                    if (reader["FItemID"].ToString() != "")
+                        item.Order_id = reader["FItemID"].ToString();
+                    if (reader["FNumber"].ToString() != "")
+                        item.daima_gonghao = reader["FNumber"].ToString();
+                    if (reader["FName"].ToString() != "")
+                        item.mingcheng = reader["FName"].ToString();
+                    //if (reader["FName"].ToString() != "")
+                    //    item.quanming = reader["FName"].ToString();
+                    if (reader["F_101"].ToString() != "")
+                        item.xingbie = reader["F_101"].ToString();
+               
+                    if (reader["F_108"].ToString() != "")
+                        item.minzu = reader["F_108"].ToString();
+                    if (reader["F_109"].ToString() != "")
+                    {
+                        item.chushengriqi = reader["F_109"].ToString();
+                        item.chushengriqi = clsCommHelp.objToDateTime1(reader["F_109"].ToString());
+
+                    }
+                    if (reader["F_103"].ToString() != "")
+                        item.zhengjianleixing = reader["F_103"].ToString();
+
+                    if (reader["F_104"].ToString() != "")
+                        item.zhengjianhaoma = reader["F_104"].ToString();
+
+                    if (reader["F_106"].ToString() != "")
+                        item.jiatingzhuzhi = reader["F_106"].ToString();
+
+
+                    if (reader["F_127"].ToString() != "")
+                    {
+                        item.zhengjianyouxiao = reader["F_127"].ToString();
+                        item.zhengjianyouxiao = clsCommHelp.objToDateTime1(reader["F_127"].ToString());
+
+                    }
+                    if (reader["F_105"].ToString() != "")
+                        item.jiguan = reader["F_105"].ToString();
+
+
+                    //if (reader["shenheren"].ToString() != "")
+                    //    item.shenheren = reader["shenheren"].ToString();
+
+
+                    //if (reader["fujian"].ToString() != "")
+                    //    item.fujian = reader["fujian"].ToString();
+
+                    //if (reader["tupian"].ToString() != "")
+                    item.tupian = item.zhengjianhaoma.ToString();
+
+
+                    ClaimReport_Server.Add(item);
+
+                    //这里做数据处理....
                 }
-                if (reader["F_103"].ToString() != "")
-                    item.zhengjianleixing = reader["F_103"].ToString();
-
-                if (reader["F_104"].ToString() != "")
-                    item.zhengjianhaoma = reader["F_104"].ToString();
-
-                if (reader["F_106"].ToString() != "")
-                    item.jiatingzhuzhi = reader["F_106"].ToString();
-
-
-                if (reader["F_127"].ToString() != "")
-                {
-                    item.zhengjianyouxiao = reader["F_127"].ToString();
-                    item.zhengjianyouxiao = clsCommHelp.objToDateTime1(reader["F_127"].ToString());
-
-                }
-                if (reader["F_105"].ToString() != "")
-                    item.jiguan = reader["F_105"].ToString();
-
-
-                //if (reader["shenheren"].ToString() != "")
-                //    item.shenheren = reader["shenheren"].ToString();
-
-
-                //if (reader["fujian"].ToString() != "")
-                //    item.fujian = reader["fujian"].ToString();
-
-                //if (reader["tupian"].ToString() != "")
-                item.tupian = item.zhengjianhaoma.ToString();
-
-
-                ClaimReport_Server.Add(item);
-
-                //这里做数据处理....
+                return ClaimReport_Server;
             }
-            return ClaimReport_Server;
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+      
+               // inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
+
+                throw ex;
+            }
 
         }
         public bool deleteCard(string sql2)
@@ -931,9 +1036,15 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
+               
+                throw ex;
+
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
+
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+      
                 return false;
 
                 throw;
@@ -1011,9 +1122,12 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
+            
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+      
                 return false;
 
                 throw;

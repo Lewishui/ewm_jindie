@@ -36,7 +36,9 @@ namespace SDZdb
         public string jiguan { get; set; }
         public string shenheren { get; set; }
         public string fujian { get; set; }
-        public string tupian { get; set; }     
+        public string tupian { get; set; }
+        public string CardType { get; set; }    
+        
         //PIC
         public string FTypeID { get; set; }
         public string FItemID { get; set; }
@@ -50,5 +52,7 @@ namespace SDZdb
 
         public byte[] imagebytes { get; set; }     
       
+        //
+        public string zhengjianyouxiaoStart { get; set; }
     }
 }

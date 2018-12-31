@@ -135,7 +135,22 @@ namespace China_System.Common
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        try
+                        {
+                            if (obj.ToString().Length == 8)
+                            {
+                                strResult = DateTime.Parse(obj.ToString().Substring(0, 4) + "-" +
+                                                           obj.ToString().Substring(4, 2) + "-" +
+                                                           obj.ToString().Substring(6, 2)).ToString("yyyy/MM/dd");
+                            }
+
+                        }
+                        catch (Exception ex1)
+                        {
+                            
+                            throw ex1;
+                        }
+                       
                     }
                 }
             }

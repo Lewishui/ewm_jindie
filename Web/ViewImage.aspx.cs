@@ -19,13 +19,14 @@ namespace Web
             {
                 clsAllnew BusinessHelp = new clsAllnew();
                 string QiHao = Request.QueryString["QiHao"];
-              
+               
+
                 string sql2 = "select * from t_Accessory where   FItemID='" + QiHao + "'";
 
                 List<clCard_info> readCards = BusinessHelp.Readt_PICServer(sql2);
 
-                
-                if (readCards[0].imagebytes != null  )
+
+                if (readCards.Count > 0 && readCards[0].imagebytes != null)
                 {
                     MemoryStream imageBytes = new MemoryStream(readCards[0].imagebytes);
 
