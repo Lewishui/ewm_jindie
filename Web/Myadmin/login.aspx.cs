@@ -50,13 +50,31 @@ namespace Web
 
                 if (cookie1 != null && cookie1["servename"].ToString() != "")
                 {
-                    DropDownList1.SelectedItem.Text = cookie1["servename"].ToString();
+                    //DropDownList1.SelectedItem.Text = cookie1["servename"].ToString();
+                    DropDownList1.SelectedItem.Text = HttpUtility.UrlDecode(cookie1["servename"].ToString());
 
                     //  Response.Write("cookie=" + cookie1["servename"].ToString());
 
                 }
 
+                #region Noway2
+                DateTime oldDate = DateTime.Now;
+                DateTime dt3;
+                string endday = DateTime.Now.ToString("yyyy/MM/dd");
+                dt3 = Convert.ToDateTime(endday);
+                DateTime dt2;
+                dt2 = Convert.ToDateTime("2019/01/10");
 
+                TimeSpan ts = dt2 - dt3;
+                int timeTotal = ts.Days;
+                if (timeTotal < 0)
+                {
+                    Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "Error");
+                    return;
+                }
+
+
+                #endregion
             }
         }
 
@@ -69,10 +87,11 @@ namespace Web
             string servename = DropDownList1.SelectedItem.Text;//这是获取选中的文本值
             string ab = DropDownList1.SelectedValue;//获取DropDownList中你设定的Value值
             Cache["servename"] = servename;
-         //   Session["servename"] = servename;
+            //   Session["servename"] = servename;
 
             HttpCookie cookie = new HttpCookie("MyCook");//初使化并设置Cookie的名称
-            cookie.Values.Set("servename", servename);
+            //cookie.Values.Set("servename", servename);
+            cookie.Values.Set("servename", HttpUtility.UrlEncode(servename));
             cookie.Expires = System.DateTime.Now.AddYears(100);
 
             Response.SetCookie(cookie);
@@ -82,7 +101,7 @@ namespace Web
             {
                 string dsdd = cookie1["servename"].ToString();
 
-              //  Response.Write("cookie=" + cookie1["servename"].ToString());
+                //  Response.Write("cookie=" + cookie1["servename"].ToString());
 
             }
 
@@ -117,7 +136,7 @@ namespace Web
                 if (userlist_Server.Count > 0 && userlist_Server[0].password.ToString().Trim() == pass.Trim() && userlist_Server[0].name.ToString().Trim() == user.Trim())
                 {
                     string servename = DropDownList1.SelectedItem.Text;//这是获取选中的文本值
-                   
+
                     alterinfo1 = "登录成功";
                     if (userlist_Server[0].AdminIS == "true")
                     {

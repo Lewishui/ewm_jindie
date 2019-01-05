@@ -16,6 +16,8 @@ namespace Web.ErrorPage
                 string QiHao = Request.QueryString["error"];
                 if (Application["error"] != null)
                     ErrorMessageLabel.Text = Application["error"].ToString();
+                else if (Request.QueryString["error"] != null && Request.QueryString["error"] != "")
+                    ErrorMessageLabel.Text = Request.QueryString["error"];
 
             }
         }

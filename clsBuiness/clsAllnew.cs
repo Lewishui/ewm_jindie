@@ -301,7 +301,8 @@ namespace clsBuiness
             catch (Exception ex)
             {
               //  inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
-
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "无法与服务器建立连接，请确保数据库配置！");
+      
                 throw ex;
             }
         }

@@ -223,9 +223,9 @@
                                     <asp:Button ID="button3" class="button" onmouseover="this.className='ui-btn ui-btn-reset-hover'"
                                         onmouseout="this.className='button'" runat="server" OnClick="button2_Click" Text="清空" Width="10%" Height="30px" />
                             &nbsp;&nbsp;&nbsp;
-                             <asp:Button ID="button1" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
+                           <%--  <asp:Button ID="button1" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
                                  onmouseout="this.className='button'" runat="server" Text="入库" OnClick="btwrite_Click" Width="10%" Height="30px" />
-                            &nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;--%>
                              <asp:Button ID="btReadcard_server" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
                                  onmouseout="this.className='button'" runat="server" Text="查询本库所有" OnClick="btReadcard_server_Click" Width="10%" Height="30px" />
                             &nbsp;&nbsp;&nbsp;
