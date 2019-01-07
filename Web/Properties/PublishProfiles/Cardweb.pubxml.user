@@ -13,19 +13,19 @@
       <publishTime>12/21/2018 15:29:23</publishTime>
     </File>
     <File Include="bin/China_System.Common.dll">
-      <publishTime>12/30/2018 18:30:34</publishTime>
+      <publishTime>01/07/2019 20:38:31</publishTime>
     </File>
     <File Include="bin/clsBuiness.dll">
-      <publishTime>01/05/2019 08:39:31</publishTime>
+      <publishTime>01/07/2019 21:12:20</publishTime>
     </File>
     <File Include="bin/SDZdb.dll">
-      <publishTime>12/30/2018 18:30:33</publishTime>
+      <publishTime>01/07/2019 20:38:30</publishTime>
     </File>
     <File Include="bin/ThoughtWorks.QRCode.dll">
       <publishTime>12/28/2018 14:51:39</publishTime>
     </File>
     <File Include="bin/Web.dll">
-      <publishTime>01/05/2019 08:42:58</publishTime>
+      <publishTime>01/07/2019 21:32:38</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>11/23/2018 10:03:04</publishTime>
@@ -892,7 +892,7 @@
       <publishTime>12/20/2018 22:36:29</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/29/2018 09:32:18</publishTime>
+      <publishTime>01/07/2019 21:32:57</publishTime>
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>11/23/2018 22:59:37</publishTime>
