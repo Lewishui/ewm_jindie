@@ -18,7 +18,7 @@ namespace SDZdb
         public string jigoudaima { get; set; }
         public string userTime { get; set; }
         public string mibao { get; set; }
-        
+
     }
     public class clCard_info
     {
@@ -37,8 +37,8 @@ namespace SDZdb
         public string shenheren { get; set; }
         public string fujian { get; set; }
         public string tupian { get; set; }
-        public string CardType { get; set; }    
-        
+        public string CardType { get; set; }
+
         //PIC
         public string FTypeID { get; set; }
         public string FItemID { get; set; }
@@ -50,9 +50,42 @@ namespace SDZdb
         public string FEntryID { get; set; }
 
 
-        public byte[] imagebytes { get; set; }     
-      
+        public byte[] imagebytes { get; set; }
+
         //
         public string zhengjianyouxiaoStart { get; set; }
+    }
+    public class clt_Item_info
+    {
+        public string Order_id { get; set; }//=FItemID
+        public string FItemID { get; set; }
+        public string FItemClassID { get; set; }
+        public string FExternID { get; set; }
+        public string FNumber { get; set; }
+        public string FParentID { get; set; }
+        public string FLevel { get; set; }
+        public string FDetail { get; set; }
+        public string FName { get; set; }
+        public string FUnUsed { get; set; }
+        public string FBrNo { get; set; }
+        public string FFullNumber { get; set; }
+        public string FDiff { get; set; }
+        public string FDeleted { get; set; }
+        public string FShortNumber { get; set; }
+        public string FFullName { get; set; }
+        public string UUID { get; set; }
+        public string FGRCommonID { get; set; }
+        public string FSystemType { get; set; }
+        public string FUseSign { get; set; }
+        public string FChkUserID { get; set; }
+        public string FAccessory { get; set; }
+        public string FGrControl { get; set; }
+        public DateTime FModifyTime { get; set; }
+        public string FHavePicture { get; set; }
+      
+
+
+
+
     }
 }

@@ -28,6 +28,8 @@ namespace Web
         bool ischeck_zhengjianhaoma = true;
         clsAllnew BusinessHelp;
         private string servename;
+        List<clt_Item_info> t_Item_info;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             var username = Request.Form["idResult"];
@@ -232,6 +234,15 @@ namespace Web
 
                     //BusinessHelp.Readt_PICServer(sql2);
                     BusinessHelp.deleteCard(sql2);
+
+                    //删 t_Item
+
+                    sql2 = "delete from t_Item where   FItemID='" + QiHao + "'";
+
+                    BusinessHelp.deleteCard(sql2);
+
+
+
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "", "<script>alert('删除成功')</script>");
                     btReadcard_server_Click(null, EventArgs.Empty);
 
@@ -447,6 +458,54 @@ namespace Web
                 BusinessHelp.deleteCard(sql2);
             }
             BusinessHelp.createICcard_info_Server(readCards);
+
+            //更新 t_Item
+            if (readCards != null && readCards.Count > 0)
+            {
+                string sql2 = "delete from t_Item where   FItemID='" + readCards[0].FItemID + "'";
+
+                BusinessHelp.deleteCard(sql2);
+            }
+            t_Item_info = new List<clt_Item_info>();
+            #region MyRegion
+            clt_Item_info item = new clt_Item_info();
+            item.FItemID = readCards[0].FItemID;
+            item.FItemClassID = "3002";
+            item.FExternID = "-1";
+            item.FNumber = readCards[0].daima_gonghao;
+            item.FParentID = "0";
+            item.FLevel = "1";
+            item.FDetail = "1";
+            item.FName = readCards[0].mingcheng;
+            item.FUnUsed = "0";
+            item.FBrNo = "0";
+            item.FFullNumber = readCards[0].daima_gonghao;
+            item.FDiff = "0";
+            item.FDeleted = "0";
+            item.FShortNumber = readCards[0].daima_gonghao;
+            item.FFullName = readCards[0].mingcheng;
+            //item.UUID = readCards[0].FItemID;
+            item.FGRCommonID = "-1";
+            item.FSystemType = "1";
+            item.FUseSign = "0";
+            //item.FChkUserID = readCards[0].FItemID;
+            item.FAccessory = "0";
+            item.FGrControl = "-1";
+            item.FModifyTime = DateTime.Now;
+            item.FHavePicture = "1";
+
+            #endregion
+
+            t_Item_info.Add(item);
+
+
+            BusinessHelp.create_t_Item_info_Server(t_Item_info);
+
+
+
+
+
+
             //更新图片
             if (readCards != null && readCards.Count > 0)
             {
@@ -614,7 +673,7 @@ namespace Web
                 #region 假数据
                 //resulits = new List<clCard_info>();
 
-                //resulits = jiashuju();
+                //   resulits = jiashuju();
 
                 #endregion
 
@@ -738,6 +797,9 @@ namespace Web
             item.mingcheng = "刘明川";
             item.minzu = "汉";
             item.xingbie = "1";
+            item.xingbie = "990113";//女
+
+            //xingbie = "990112";//男
             item.chushengriqi = "19860802";
             item.jiatingzhuzhi = "南京市江宁区横溪街道西岗社区大吴峰岘29号";
 
@@ -758,6 +820,10 @@ namespace Web
             //民族/国家
             item.minzu = minzu.ToString();
             //性别 
+            if (xingbie == "1")
+                xingbie = "990113";//女
+            else
+                xingbie = "990112";//男
             item.xingbie = xingbie.ToString();
             //出生 
             item.chushengriqi = chushengriqi.ToString();
@@ -933,6 +999,49 @@ namespace Web
                 readCards[0].zhengjianyouxiao = clsCommHelp.objToDateTime1(fileText[1]);
 
                 BusinessHelp.createICcard_info_Server(readCards);
+
+
+                //更新 t_Item
+                if (readCards != null && readCards.Count > 0)
+                {
+                    string sql2 = "delete from t_Item where   FItemID='" + readCards[0].Order_id + "'";
+
+                    BusinessHelp.deleteCard(sql2);
+                }
+                List<clt_Item_info> t_Item_info = new List<clt_Item_info>();
+                #region MyRegion
+                clt_Item_info item = new clt_Item_info();
+                item.FItemID = readCards[0].Order_id;
+                item.FItemClassID = "3002";
+                item.FExternID = "-1";
+                item.FNumber = readCards[0].daima_gonghao;
+                item.FParentID = "0";
+                item.FLevel = "1";
+                item.FDetail = "1";
+                item.FName = readCards[0].mingcheng;
+                item.FUnUsed = "0";
+                item.FBrNo = "0";
+                item.FFullNumber = readCards[0].daima_gonghao;
+                item.FDiff = "0";
+                item.FDeleted = "0";
+                item.FShortNumber = readCards[0].daima_gonghao;
+                item.FFullName = readCards[0].mingcheng;
+                //item.UUID = readCards[0].FItemID;
+                item.FGRCommonID = "-1";
+                item.FSystemType = "1";
+                item.FUseSign = "0";
+                //item.FChkUserID = readCards[0].FItemID;
+                item.FAccessory = "0";
+                item.FGrControl = "-1";
+                //item.FModifyTime = DateTime.Now;
+                item.FHavePicture = "1";
+
+                #endregion
+
+                t_Item_info.Add(item);
+
+
+                BusinessHelp.create_t_Item_info_Server(t_Item_info);
 
                 //更新图片
                 if (readCards != null && readCards.Count > 0)

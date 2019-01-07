@@ -239,7 +239,9 @@ namespace clsBuiness
                         if (rev_servename != "" && rev_servename != null)
                         {
 
-                            ConStr = System.Web.Configuration.WebConfigurationManager.AppSettings[cookie1["servename"].ToString()];
+                            //ConStr = System.Web.Configuration.WebConfigurationManager.AppSettings[cookie1["servename"].ToString()];
+                            ConStr = System.Web.Configuration.WebConfigurationManager.AppSettings[HttpUtility.UrlDecode(cookie1["servename"].ToString()).ToString()];
+
                             ConStrPIC = ConStr.Replace("Provider=SQLOLEDB;", "");
 
                         }
@@ -300,9 +302,9 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-              //  inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
+                //  inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
                 HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "无法与服务器建立连接，请确保数据库配置！");
-      
+
                 throw ex;
             }
         }
@@ -711,7 +713,7 @@ namespace clsBuiness
                 {
 
                     string sql = "";
-                    sql = "insert into t_Item_3002(FNumber,FName,F_101,F_108,F_109,F_103,F_104,F_106,F_127,F_105,FItemID) values ('" + item.daima_gonghao + "','" + item.mingcheng + "',N'" + item.xingbie + "',N'"+ item.minzu + "','" + item.chushengriqi + "','" + item.zhengjianleixing + "','" + item.zhengjianhaoma + "','" + item.jiatingzhuzhi + "','" + item.zhengjianyouxiao + "','" + item.jiguan + "','" + item.Order_id + "')";
+                    sql = "insert into t_Item_3002(FNumber,FName,F_101,F_108,F_109,F_103,F_104,F_106,F_127,F_105,FItemID) values ('" + item.daima_gonghao + "','" + item.mingcheng + "',N'" + item.xingbie + "',N'" + item.minzu + "','" + item.chushengriqi + "','" + item.zhengjianleixing + "','" + item.zhengjianhaoma + "','" + item.jiatingzhuzhi + "','" + item.zhengjianyouxiao + "','" + item.jiguan + "','" + item.Order_id + "')";
 
                     OleDbCommand cmd = new OleDbCommand(sql, con);
                     cmd.ExecuteNonQuery();
@@ -723,7 +725,49 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-              
+
+                if (con.State == ConnectionState.Open) con.Close();
+                if (con != null)
+                    con.Dispose();
+
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+
+                throw ex;
+                return;
+
+                throw;
+            }
+            finally { if (con.State == ConnectionState.Open) con.Close(); con.Dispose(); }
+        }
+        public void create_t_Item_info_Server(List<clt_Item_info> AddMAPResult)
+        {
+
+
+            //创建连接对象
+            bool isok = false;
+            OleDbConnection con = new OleDbConnection(ConStr);
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                    con.Open();
+                //命令
+                foreach (clt_Item_info item in AddMAPResult)
+                {
+
+                    string sql = "";
+                    sql = "insert into t_Item(FItemID,FItemClassID,FExternID,FNumber,FParentID,FLevel,FDetail,FName,FUnUsed,FBrNo,FFullNumber,FDiff,FDeleted,FShortNumber,FFullName,FGRCommonID,FSystemType,FUseSign,FAccessory,FGrControl,FHavePicture) values ('" + item.FItemID + "','" + item.FItemClassID + "',N'" + item.FExternID + "',N'" + item.FNumber + "','" + item.FParentID + "','" + item.FLevel + "','" + item.FDetail + "','" + item.FName + "','" + item.FUnUsed + "','" + item.FBrNo + "','" + item.FFullNumber + "','" + item.FDiff + "','" + item.FDeleted + "','" + item.FShortNumber + "','" + item.FFullName + "','" + item.FGRCommonID + "','" + item.FSystemType + "','" + item.FUseSign + "','" + item.FAccessory + "','" + item.FGrControl  + "','" + item.FHavePicture + "')";
+
+                    OleDbCommand cmd = new OleDbCommand(sql, con);
+                    cmd.ExecuteNonQuery();
+                    isok = true;
+
+                }
+                //con.Close();
+                return;
+            }
+            catch (Exception ex)
+            {
+
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
@@ -833,12 +877,12 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-               
+
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
                 HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
-      
+
                 return;
 
                 throw;
@@ -882,7 +926,7 @@ namespace clsBuiness
             catch (Exception ex)
             {
                 HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
-      
+
                 //("Base64StringToImage 转换失败\nException：" + ex.Message);
             }
             return "";
@@ -966,7 +1010,7 @@ namespace clsBuiness
                     //    item.quanming = reader["FName"].ToString();
                     if (reader["F_101"].ToString() != "")
                         item.xingbie = reader["F_101"].ToString();
-               
+
                     if (reader["F_108"].ToString() != "")
                         item.minzu = reader["F_108"].ToString();
                     if (reader["F_109"].ToString() != "")
@@ -1015,8 +1059,8 @@ namespace clsBuiness
             catch (Exception ex)
             {
                 HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
-      
-               // inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
+
+                // inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
 
                 throw ex;
             }
@@ -1037,7 +1081,7 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-               
+
                 throw ex;
 
                 if (con.State == ConnectionState.Open) con.Close();
@@ -1045,7 +1089,7 @@ namespace clsBuiness
                     con.Dispose();
 
                 HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
-      
+
                 return false;
 
                 throw;
@@ -1123,12 +1167,12 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-            
+
                 if (con.State == ConnectionState.Open) con.Close();
                 if (con != null)
                     con.Dispose();
                 HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
-      
+
                 return false;
 
                 throw;
