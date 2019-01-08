@@ -303,7 +303,7 @@ namespace clsBuiness
             catch (Exception ex)
             {
                 //  inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
-                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "无法与服务器建立连接，请确保数据库配置！");
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "无法与服务器建立连接，请确保数据库配置或网络畅通！");
 
                 throw ex;
             }
@@ -1058,7 +1058,7 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + ex.ToString());
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" +"网络访问较慢或网络不通无法访问 ："+ ex.ToString());
 
                 // inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
 

@@ -352,7 +352,18 @@ div {
     border: solid 1px #93c2f1;
     width: 98%;
     font-size: 10pt;
+  
+    
 }
+.mlength
+  {
+  display: block;
+  width: 100px;
+  overflow: hidden;  
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  }
 
     .mGrid td {
         border-collapse: collapse;
@@ -365,6 +376,7 @@ div {
         border: solid 1px #93c2f1;
         font-size: 10pt;
         background-color: #e4f6ff;
+      
     }
 
 .select_w150 {
@@ -372,7 +384,11 @@ div {
     width: 200px;
     _margin-top: 3px;
 }
-
+.select_w151 {
+    height: 20px;
+    width: 300px;
+    _margin-top: 3px;
+}
 .lefts_pic {
     float: left;
     width: 800px;
@@ -454,7 +470,10 @@ div {
     text-align: right;
     font: 18px/21px arial,sans-serif;
 }
-
+.textfield2 {
+    text-align: left;
+    font: 20px/23px arial,sans-serif;
+}
 .textfield2 {
     text-align: right;
     font: 22px/21px arial,sans-serif;

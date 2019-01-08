@@ -25,6 +25,14 @@
             }
             form1.submit();
         }
+        function btsearchcheck() {
+            if (document.form1.txrearchNAME.value == "" && document.form1.txrearchID.value == "") {
+                alert("请输入查找信息！");
+                document.form1.txrearchNAME.focus();
+
+                return false
+            }
+        }
         function ClearData() {
 
         }
@@ -98,14 +106,14 @@
 
                 errosinfo = "成功";
                 idResultDesc1 = "读卡成功";
-              //  alert("读卡成功+");
+                //  alert("读卡成功+");
 
             }
             else {
 
                 errosinfo = "失败";
                 idResultDesc1 = "读卡失败";
-            //    alert("读卡失败+");
+                //    alert("读卡失败+");
             }
             //
             //if (imagel == "0") {
@@ -125,7 +133,7 @@
             //alert("全//"+CertCtl.GetJPGCardVBase64());
             //alert("正//"+CertCtl.GetJPGCardBBase64());
 
-            var postData = { mingcheng: CertCtl.Name, minzu: CertCtl.Nation, xingbie: CertCtl.Sex, chushengriqi: CertCtl.Born, jiatingzhuzhi: CertCtl.Address, zhengjianhaoma: CertCtl.CardNo, zhengjianyouxiao: CertCtl.EffectedDate + "-" + CertCtl.ExpiredDate, FData: CertCtl.GetJPGCardVBase64(), FDataF: CertCtl.GetJPGCardBBase64(), idResult: errosinfo };//, idResultDesc: idResultDesc1
+            var postData = { mingcheng: CertCtl.Name, minzu: CertCtl.Nation, xingbie: CertCtl.Sex, chushengriqi: CertCtl.Born, jiatingzhuzhi: CertCtl.Address, zhengjianhaoma: CertCtl.CardNo, zhengjianyouxiao: CertCtl.ExpiredDate, FData: CertCtl.GetJPGCardVBase64(), FDataF: CertCtl.GetJPGCardBBase64(), idResult: errosinfo };//, idResultDesc: idResultDesc1   CertCtl.EffectedDate + "-" + 
 
             $.ajax({
                 type: "post", //要用post方式                 
@@ -137,13 +145,20 @@
                 success: function (data) {
 
                     alert(data.d);//返回的数据用data.d获取内容
-                  //  window.location.reload();
+                    //  window.location.reload();
                 },
                 error: function (err) {
                     alert(err);
                 }
             });
             //  __doPostBack('bind', '');
+        }
+        function cleardata() {
+            document.getElementById('txrearchID').value = "";
+            document.getElementById('txrearchNAME').value = "";
+            //document.getElementById('gvList').DataSource = "";
+            
+       
         }
         function exitSystem() {
             if (confirm('确认退出吗?')) {
@@ -175,9 +190,8 @@
         </div>
         <hr />
         <div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="/Myadmin/logout.aspx""  >退出登录</a>
+    </div>
 
-        </div>
-  
     </div>
     <br />
 
@@ -190,6 +204,7 @@
             <br />
             <table>
                 <tbody>
+
                     <tr>
                         <br />
                         <th class="textfield1" width="30%">数据库*</th>
@@ -201,15 +216,38 @@
                             <input name="password" type="password" class="select_w150" id="password" size="16" maxlength="100" value="<%=pass%>" readonly="true" /></td>
 
                     </tr>
+                  
+                    <tr>
+                        <br />
 
+                        <div>
+                            <th class="textfield1" width="26%">请输入户名*</th>
+                            <td class="auto-style1">
+                                <asp:TextBox ID="txrearchNAME" runat="server" class="select_w150" Height="20px"></asp:TextBox>
+                            </td>
+                            <th class="textfield1" width="10%">请输入身份证*</th>
+                            <td class="auto-style1">
+                                <asp:TextBox ID="txrearchID" runat="server" class="select_w150" Height="20px"></asp:TextBox>
+                            </td>
+                            <td width="20%">
+                                <asp:Button ID="btsearch" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
+                                    onmouseout="this.className='button'" runat="server" Text="查找" Width="30%" Height="30px" OnClientClick="btsearchcheck()" OnClick="btsearch_Click1" />
+
+                            </td>
+
+                        </div>
+                    </tr>
                 </tbody>
 
-
+            </table>
+            <table>
+              
             </table>
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <br />
                 <br />
                 <tr>
+
                     <td align="center" colspan="5">
                         <div>
                             <%--  <input type="submit" name="Submit1" value="读卡" class="button" onclick="ReadCard()">--%>
@@ -221,13 +259,13 @@
 
                             &nbsp;&nbsp;&nbsp;
                                     <asp:Button ID="button3" class="button" onmouseover="this.className='ui-btn ui-btn-reset-hover'"
-                                        onmouseout="this.className='button'" runat="server" OnClick="button2_Click" Text="清空" Width="10%" Height="30px" />
+                                        onmouseout="this.className='button'" runat="server"  Text="清空" Width="10%" Height="30px" OnClick="button2_Click" OnClientClick="cleardata()" />
                             &nbsp;&nbsp;&nbsp;
                            <%--  <asp:Button ID="button1" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
                                  onmouseout="this.className='button'" runat="server" Text="入库" OnClick="btwrite_Click" Width="10%" Height="30px" />
                             &nbsp;&nbsp;&nbsp;--%>
-                             <asp:Button ID="btReadcard_server" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
-                                 onmouseout="this.className='button'" runat="server" Text="查询本库所有" OnClick="btReadcard_server_Click" Width="10%" Height="30px" />
+                            <asp:Button ID="btReadcard_server" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
+                                onmouseout="this.className='button'" runat="server" Text="查询本库所有" OnClick="btReadcard_server_Click" Width="10%" Height="30px" />
                             &nbsp;&nbsp;&nbsp;
                             <asp:Button ID="btnExport" class="button" onmouseover="this.className='ui-btn ui-btn-search-hover'"
                                 onmouseout="this.className='button'" runat="server" Text="导出Excel" OnClick="toExcel" Width="10%" Height="30px" />
@@ -236,6 +274,7 @@
                     </td>
 
                 </tr>
+
 
                 <tr>
 
@@ -262,7 +301,7 @@
             <asp:GridView ID="gvList" runat="server" Width="90%" AutoGenerateColumns="False"
                 CssClass="mGrid" align="center"
                 CellPadding="0" Style="margin-top: 5px;" GridLines="Vertical"
-                EmptyDataText="&lt;span class='ui-icon ui-icon-remind' style='float: left; margin-right: .3em;'&gt;&lt;/span&gt;&lt;strong&gt;提醒：&lt;/strong&gt;对不起！您所查询的数据不存在。" OnRowCommand="GridView_OnRowCommand" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" ViewStateMode="Disabled">
+                EmptyDataText="&lt;span class='ui-icon ui-icon-remind' style='float: left; margin-right: .3em;'&gt;&lt;/span&gt;&lt;strong&gt;提醒：&lt;/strong&gt;对不起！您所查询的数据不存在。" OnRowCommand="GridView_OnRowCommand" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" ViewStateMode="Disabled" OnRowCreated="GridView1_RowCreated" OnRowDataBound="GridView_RowDataBound" OnDataBound="GridView1_DataBound">
                 <Columns>
 
                     <asp:BoundField HeaderText="代码（即工号）" DataField="daima_gonghao">
@@ -276,8 +315,8 @@
                         <ControlStyle Width="60px" />
                         <ItemStyle HorizontalAlign="Center" Width="7%"></ItemStyle>
                     </asp:BoundField>
-                    <asp:BoundField HeaderText="全名" DataField="quanming">
-                        <%--suoshujigou--%>
+                    <asp:BoundField HeaderText="全名" DataField="quanming" Visible="False">
+
                         <ControlStyle Width="60px" />
                         <ItemStyle HorizontalAlign="Center" Width="3%"></ItemStyle>
                     </asp:BoundField>
@@ -312,7 +351,7 @@
                         <ItemStyle HorizontalAlign="Center" Width="7%"></ItemStyle>
                     </asp:BoundField>
 
-                    <asp:BoundField HeaderText="家庭住址" DataField="jiatingzhuzhi">
+                    <asp:BoundField HeaderText="家庭住址" DataField="jiatingzhuzhi"  SortExpression="commentContent">
                         <%--suoshujigou--%>
                         <ControlStyle Width="100px" />
                         <ItemStyle HorizontalAlign="Center" Width="7%"></ItemStyle>
@@ -324,20 +363,20 @@
                         <ItemStyle HorizontalAlign="Center" Width="7%"></ItemStyle>
                     </asp:BoundField>
 
-                    <asp:BoundField HeaderText="籍贯" DataField="jiguan">
-                        <%--suoshujigou--%>
+                    <asp:BoundField HeaderText="籍贯" DataField="jiguan" Visible="False">
+
                         <ControlStyle Width="100px" />
                         <ItemStyle HorizontalAlign="Center" Width="7%"></ItemStyle>
                     </asp:BoundField>
 
-                    <asp:BoundField HeaderText="审核人" DataField="shenheren">
-                        <%--suoshujigou--%>
+                    <asp:BoundField HeaderText="审核人" DataField="shenheren" Visible="False">
+
                         <ControlStyle Width="60px" />
                         <ItemStyle HorizontalAlign="Center" Width="3%"></ItemStyle>
                     </asp:BoundField>
 
-                    <asp:BoundField HeaderText="附件" DataField="fujian">
-                        <%--suoshujigou--%>
+                    <asp:BoundField HeaderText="附件" DataField="fujian" Visible="False">
+
                         <ControlStyle Width="30px" />
                         <ItemStyle HorizontalAlign="Center" Width="3%"></ItemStyle>
                     </asp:BoundField>

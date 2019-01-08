@@ -42,9 +42,7 @@ namespace Web
                 string dsdd = cookie1["servename"].ToString();
                 //Response.Write("cookie=" + cookie1["servename"].ToString());
             }
-            if (username != null)
-            {
-            }
+            
             if (!Page.IsPostBack)
             {
                 if (!Page.IsPostBack)
@@ -68,6 +66,8 @@ namespace Web
                 }
                 bind();
             }
+            //gvList.HeaderStyle.Wrap = false;//表头不允许换行  
+            //gvList.RowStyle.Wrap = false;//表内容不允许换行 
             //  Button1.Attributes.Add("onclick", "chkData()");
             ischeck_zhengjianhaoma = true;
             if (this.hidden1.Value == "1")
@@ -76,7 +76,6 @@ namespace Web
                 this.MyGo();
             }
             if (IsPostBack)
-
                 bind();
         }
         public class SortableBindingList<T> : BindingList<T>
@@ -191,8 +190,7 @@ namespace Web
                 else return String.Compare(o1.ToString().Trim(), o2.ToString().Trim());
             }
         }
-
-
+        
         public void bind()
         {
 
@@ -212,10 +210,30 @@ namespace Web
 
             InitialSystemInfo();
 
+            this.txrearchID.Text = "";
+            this.txrearchNAME.Text = "";
+
             return "ok";
 
         }
+        public static string ajaxclear_bind()
+        {
+            List<clCard_info> readCards = new List<clCard_info>();
 
+            //this.gvList.AutoGenerateColumns = false;
+            //sortablePendingOrderList = new SortableBindingList<clCard_info>(readCards);
+            ////this.bindingSource1.DataSource = sortablePendingOrderList;
+            //this.gvList.DataSource = sortablePendingOrderList;
+            //gvList.DataKeyNames = new string[] { "Order_id" };//主键
+           // this.gvList.DataBind();
+           //Show_infomation = "共计 " + sortablePendingOrderList.Count() + " 条";
+      
+         
+
+            return "ok";
+
+           
+        }
 
         protected void GridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -316,6 +334,18 @@ namespace Web
                     }
                 }
             }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+                //鼠标经过时，行背景色变
+
+                e.Row.Attributes.Add("onmouseover", "this.style.backgroundColor='#ffd800'");
+
+                //鼠标移出时，行背景色变
+
+                e.Row.Attributes.Add("onmouseout", "this.style.backgroundColor='#FFFFFF'");
+
+            }
         }
         protected void GridView_Pue_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -337,6 +367,13 @@ namespace Web
                 item.daima_gonghao = ((TextBox)(gvList.Rows[e.RowIndex].Cells[0].Controls[0])).Text.ToString().Trim();
                 item.mingcheng = ((TextBox)(gvList.Rows[e.RowIndex].Cells[1].Controls[0])).Text.ToString().Trim();
                 item.xingbie = ((TextBox)(gvList.Rows[e.RowIndex].Cells[3].Controls[0])).Text.ToString().Trim();
+
+                if (item.xingbie == "男")
+                    item.xingbie = "990113";
+                else if (item.xingbie == "女")
+                    item.xingbie = "990112";
+
+
                 item.minzu = ((TextBox)(gvList.Rows[e.RowIndex].Cells[4].Controls[0])).Text.ToString().Trim();
                 item.chushengriqi = ((TextBox)(gvList.Rows[e.RowIndex].Cells[5].Controls[0])).Text.ToString().Trim();
                 item.zhengjianleixing = ((TextBox)(gvList.Rows[e.RowIndex].Cells[6].Controls[0])).Text.ToString().Trim();
@@ -354,6 +391,23 @@ namespace Web
                 bind();
             }
         }
+
+        protected void GridView1_DataBound(object sender, EventArgs e)
+        {
+            // 演示ToolTip，使用GridView自带的ToolTip
+            for (int i = 0; i < gvList.Rows.Count; i++)
+            {
+                if (gvList.Rows[i].Cells[3].Text == "990113")
+                    gvList.Rows[i].Cells[3].Text = "男";
+                else if (gvList.Rows[i].Cells[3].Text == "990112")
+                    gvList.Rows[i].Cells[3].Text = "女";
+
+                gvList.Rows[i].Cells[8].ToolTip = gvList.Rows[i].Cells[8].Text;
+                if (gvList.Rows[i].Cells[8].Text.Length > 4)
+                    gvList.Rows[i].Cells[8].Text = gvList.Rows[i].Cells[8].Text.Substring(0, 4) + "...";
+            }
+        }
+
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -821,9 +875,9 @@ namespace Web
             item.minzu = minzu.ToString();
             //性别 
             if (xingbie == "1")
-                xingbie = "990113";//女
+                xingbie = "990112";//女
             else
-                xingbie = "990112";//男
+                xingbie = "990113";//男
             item.xingbie = xingbie.ToString();
             //出生 
             item.chushengriqi = chushengriqi.ToString();
@@ -843,7 +897,7 @@ namespace Web
             if (FData != null && FData != "")
                 item.FData = FData.ToString();
 
-            item.zhengjianleixing = "1";
+            item.zhengjianleixing = "990119";
 
 
             resulits.Add(item);
@@ -1076,6 +1130,48 @@ namespace Web
         }
 
 
+        protected void btsearch_Click1(object sender, EventArgs e)
+        {
+            if (this.txrearchNAME.Text != "" || this.txrearchID.Text != "")
+            {
+                BusinessHelp = new clsAllnew();
+                BusinessHelp.rev_servename = servename;
+                gohome();
+                readCards = new List<clCard_info>();
+                string conditions = "select * from t_Item_3002 where ";//成功
+
+                int DSD = 0;
+
+                if (txrearchNAME.Text.Length > 0)
+                {
+                    DSD++;
+                    conditions += " FName like '%" + txrearchNAME.Text + "%'";
+                }
+                if (txrearchID.Text.Length > 0 && DSD > 0)
+                {
+                    conditions += " AND F_104 like '%" + txrearchID.Text + "%'";
+                }
+                if (txrearchID.Text.Length > 0 && DSD == 0)
+                {
+                    conditions += "F_104 like '%" + txrearchID.Text + "%'";
+                }
+
+                readCards = BusinessHelp.Readt_ItemServer(conditions);
+
+                InitialSystemInfo();
+            }
+        }
+
+
+        protected void GridView1_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            //for (int i = 0; i < e.Row.Cells.Count; i++)
+            //{
+            //    e.Row.Cells[i].Attributes.Add("style", "word-break :keep-all ; word-wrap:keep-all");
+
+            //}
+
+        }
 
 
     }
