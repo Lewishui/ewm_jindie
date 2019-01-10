@@ -42,7 +42,7 @@ namespace Web
                 string dsdd = cookie1["servename"].ToString();
                 //Response.Write("cookie=" + cookie1["servename"].ToString());
             }
-            
+
             if (!Page.IsPostBack)
             {
                 if (!Page.IsPostBack)
@@ -190,7 +190,7 @@ namespace Web
                 else return String.Compare(o1.ToString().Trim(), o2.ToString().Trim());
             }
         }
-        
+
         public void bind()
         {
 
@@ -225,14 +225,14 @@ namespace Web
             ////this.bindingSource1.DataSource = sortablePendingOrderList;
             //this.gvList.DataSource = sortablePendingOrderList;
             //gvList.DataKeyNames = new string[] { "Order_id" };//主键
-           // this.gvList.DataBind();
-           //Show_infomation = "共计 " + sortablePendingOrderList.Count() + " 条";
-      
-         
+            // this.gvList.DataBind();
+            //Show_infomation = "共计 " + sortablePendingOrderList.Count() + " 条";
+
+
 
             return "ok";
 
-           
+
         }
 
         protected void GridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
@@ -1049,8 +1049,10 @@ namespace Web
 
                 readCards[0].chushengriqi = clsCommHelp.objToDateTime1(readCards[0].chushengriqi.ToString());
                 string[] fileText = System.Text.RegularExpressions.Regex.Split(readCards[0].zhengjianyouxiao, "-");
-
-                readCards[0].zhengjianyouxiao = clsCommHelp.objToDateTime1(fileText[1]);
+                if (fileText.Length > 1)
+                    readCards[0].zhengjianyouxiao = clsCommHelp.objToDateTime1(fileText[1]);
+                else
+                    readCards[0].zhengjianyouxiao = clsCommHelp.objToDateTime1(fileText[0]);
 
                 BusinessHelp.createICcard_info_Server(readCards);
 

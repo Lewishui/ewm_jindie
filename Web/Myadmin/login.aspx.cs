@@ -57,24 +57,7 @@ namespace Web
 
                 }
 
-                #region Noway2
-                DateTime oldDate = DateTime.Now;
-                DateTime dt3;
-                string endday = DateTime.Now.ToString("yyyy/MM/dd");
-                dt3 = Convert.ToDateTime(endday);
-                DateTime dt2;
-                dt2 = Convert.ToDateTime("2019/01/10");
-
-                TimeSpan ts = dt2 - dt3;
-                int timeTotal = ts.Days;
-                if (timeTotal < 0)
-                {
-                    Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "Error");
-                    return;
-                }
-
-
-                #endregion
+               
             }
         }
 
