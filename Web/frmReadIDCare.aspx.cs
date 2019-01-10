@@ -397,9 +397,9 @@ namespace Web
             // 演示ToolTip，使用GridView自带的ToolTip
             for (int i = 0; i < gvList.Rows.Count; i++)
             {
-                if (gvList.Rows[i].Cells[3].Text == "990113")
+                if (gvList.Rows[i].Cells[3].Text == "990112")
                     gvList.Rows[i].Cells[3].Text = "男";
-                else if (gvList.Rows[i].Cells[3].Text == "990112")
+                else if (gvList.Rows[i].Cells[3].Text == "990113")
                     gvList.Rows[i].Cells[3].Text = "女";
 
                 gvList.Rows[i].Cells[8].ToolTip = gvList.Rows[i].Cells[8].Text;
@@ -875,9 +875,9 @@ namespace Web
             item.minzu = minzu.ToString();
             //性别 
             if (xingbie == "1")
-                xingbie = "990112";//女
+                xingbie = "990112";//男
             else
-                xingbie = "990113";//男
+                xingbie = "990113"; //女
             item.xingbie = xingbie.ToString();
             //出生 
             item.chushengriqi = chushengriqi.ToString();
